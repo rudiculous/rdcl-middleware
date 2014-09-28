@@ -20,7 +20,8 @@
   "license": "MIT",
   "dependencies": {
     "etag": "~1.4.0",
-    "less": "~1.7.5"
+    "less": "~1.7.5",
+    "uglify-js": "~2.4.15"
   },
   "devDependencies": {
     "groc": "~0.7.0",

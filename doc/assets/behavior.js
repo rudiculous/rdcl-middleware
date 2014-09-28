@@ -196,6 +196,26 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               },
               "depth": 3,
               "outline": []
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".js"],
+                  "pygmentsLexer": "javascript",
+                  "multiLineComment": ["/*", "*", "*/"],
+                  "singleLineComment": ["//"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "JavaScript"
+                },
+                "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/assets/task.js",
+                "projectPath": "lib/assets/task.js",
+                "targetPath": "lib/assets/task",
+                "pageTitle": "lib/assets/task",
+                "title": "task"
+              },
+              "depth": 3,
+              "outline": []
             }
           ]
         }, {
