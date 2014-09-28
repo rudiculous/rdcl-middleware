@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="en"><head><title>lib/assets/helpers</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib/assets/helpers"><meta name="groc-project-path" content="lib/assets/helpers.js"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/assets/helpers.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">"use strict"</span>;</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Dependencies. </p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">var</span> pathM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">var</span> utils = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../utilities'</span>);</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Resolves an asset-relative path to an absolute path.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>root must be a String.</strong><br/>(The application root.)</p>
+</li>
+<li><p><strong>paths must be an Array.</strong><br/>(An array containing asset paths.)</p>
+</li>
+<li><p><strong>path must be a String.</strong><br/>(The asset-relative path.)</p>
+</li>
+<li><p><strong>callback must be a Function.</strong><br/>(Called when finished.)</p>
+</li>
+<li><p><strong>index is optional, must be a Number, and has a default value of 0.</strong><br/>(Start at this asset path.)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">module.exports.resolve = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">resolve</span><span class="hljs-params">(root, paths, path, callback, index)</span> {</span>
+    <span class="hljs-keyword">var</span> fullpath;
+
+    index = index || <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (index &gt;= paths.length) {
+        <span class="hljs-keyword">return</span> callback(<span class="hljs-literal">false</span>);
+    }
+
+    fullpath = pathM.join(root, paths[index], path);
+
+    fs.exists(fullpath, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(exists)</span> {</span>
+        <span class="hljs-keyword">if</span> (exists) {
+            callback(<span class="hljs-literal">true</span>, fullpath);
+        }
+        <span class="hljs-keyword">else</span> {
+            resolve(root, paths, path, callback, index + <span class="hljs-number">1</span>);
+        }
+    });
+};</div></div></div></div></body></html>

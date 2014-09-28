@@ -1,0 +1,29 @@
+{
+  "name": "rdcl-middleware",
+  "title": "rdcl middleware",
+  "description": "A collection of useful middleware for Express.js.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/rudiculous/rdcl-middleware",
+  "author": {
+    "name": "RJ van der Weide",
+    "email": "rj@rudiculous.net",
+    "url": "http://rdcl.nl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rudiculous/rdcl-middleware.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rudiculous/rdcl-middleware/issues"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "etag": "~1.4.0",
+    "less": "~1.7.5"
+  },
+  "devDependencies": {
+    "groc": "~0.7.0",
+    "grunt": "~0.4.5"
+  }
+}

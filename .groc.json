@@ -1,0 +1,10 @@
+{
+    "glob": [
+        "README.md",
+        "lib/**"
+    ],
+    "strip": [],
+    "index": "README.md",
+    "out": "doc",
+    "silent": true
+}
