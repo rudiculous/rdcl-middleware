@@ -1,11 +1,12 @@
 <!DOCTYPE html><html lang="en"><head><title>lib/TemplateLoader</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib/TemplateLoader"><meta name="groc-project-path" content="lib/TemplateLoader.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/TemplateLoader.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">"use strict"</span>;
 
-<span class="hljs-keyword">var</span> swig = <span class="hljs-built_in">require</span>(<span class="hljs-string">'swig'</span>);</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> class and augments swig.loaders.fs</span></p>
+<span class="hljs-keyword">var</span> swig = <span class="hljs-built_in">require</span>(<span class="hljs-string">'swig'</span>);
+<span class="hljs-keyword">var</span> utils = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./utilities'</span>);</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> class and augments swig.loaders.fs</span></p>
 <p>Parameters:</p>
 <ul>
 <li><strong>templateRoot must be a String.</strong><br/>(An absolute path to the templates.)</li>
 </ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TemplateLoader</span><span class="hljs-params">(templateRoot)</span> {</span>
-    <span class="hljs-keyword">this</span>.__proto__.__proto__ = swig.loaders.fs().bind(<span class="hljs-keyword">this</span>);
+    <span class="hljs-keyword">this</span>.__proto__.__proto__ = swig.loaders.fs();
     <span class="hljs-keyword">this</span>.root = templateRoot;
 }
 
