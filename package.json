@@ -1,7 +1,7 @@
 {
   "name": "rdcl-middleware",
   "title": "rdcl middleware",
-  "description": "A collection of useful middleware for Express.js.",
+  "description": "A collection of middleware and utility functions for Express JS.",
   "version": "0.1.0",
   "homepage": "https://github.com/rudiculous/rdcl-middleware",
   "author": {
