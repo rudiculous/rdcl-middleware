@@ -5,7 +5,52 @@
 </ul>
 <p><strong>Returns a Boolean</strong></p></div></div><div class="code"><div class="wrapper">exports.defined = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defined</span><span class="hljs-params">(obj)</span> {</span>
     <span class="hljs-keyword">return</span> <span class="hljs-string">'undefined'</span> !== <span class="hljs-keyword">typeof</span> obj;
-}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Makes a shallow copy of an object or an array.</p>
+};</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Creates a new prototype, optionally inheriting from <code>parent</code>.</p>
+<p>Prototypes created with this method will have a method named <code>parent()</code>, which gives easy access to the parent prototype.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>parent is optional, can be a Function or an Object, and has a default value of Object.prototype.</strong><br/>(Inherit from this prototype.)</p>
+</li>
+<li><p><strong>proto must be an Object.</strong><br/>(The methods to add in the new prototype.)</p>
+<ul>
+<li><strong>proto.constructor is optional and must be a Function.</strong><br/>(The constructor method.)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns a Function</strong></p></div></div><div class="code"><div class="wrapper">exports.klass = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">klass</span><span class="hljs-params">(parentProto, proto)</span> {</span>
+    <span class="hljs-keyword">var</span> constructor;
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.length === <span class="hljs-number">1</span>) {
+        proto = parent;
+        parent = <span class="hljs-built_in">Object</span>.prototype;
+    }
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span>(proto.constructor) === <span class="hljs-string">'function'</span>) {
+        constructor = proto.constructor;
+    }
+    <span class="hljs-keyword">else</span> {
+        constructor = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">constructor</span><span class="hljs-params">()</span> {</span>};
+    }
+
+    <span class="hljs-keyword">delete</span> proto.constructor;
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span>(parentProto) === <span class="hljs-string">'function'</span>) {
+        parentProto = parent.prototype;
+    }
+
+    constructor.prototype = <span class="hljs-built_in">Object</span>.create(parentProto);
+    constructor.prototype.constructor = constructor;
+
+    <span class="hljs-built_in">Object</span>.keys(proto).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span> {</span>
+        constructor.prototype[key] = proto[key];
+    });
+
+    constructor.prototype.parent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parent</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.getPrototypeOf(<span class="hljs-keyword">this</span>);
+    };
+
+    <span class="hljs-keyword">return</span> constructor;
+};</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Makes a shallow copy of an object or an array.</p>
 <p>Parameters:</p>
 <ul>
 <li><strong>original can be an Object or an Array.</strong></li>
