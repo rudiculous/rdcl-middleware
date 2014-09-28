@@ -172,7 +172,7 @@ Asset.prototype = {</div></div></div><div class="segment"><div class="comments d
 
         files.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(file)</span> {</span>
             <span class="hljs-keyword">var</span> attrs = utils.copy(options, attributes);
-            attrs[srcAttr] = pathM.join(assetsBaseURI, type, file);
+            attrs[srcAttr] = assetsBaseURI + <span class="hljs-string">'/'</span> + type + <span class="hljs-string">'/'</span> + file; <span class="hljs-comment">// TODO: Use something like pathM.join...</span>
             
             out.push(utils.html(tag, attrs, opts));
         });
