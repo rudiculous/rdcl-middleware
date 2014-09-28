@@ -18,7 +18,7 @@ TemplateLoader.prototype = {</div></div></div><div class="segment"><div class="c
 <li><p><strong>from must be a String.</strong><br/>(If given, should attempt to find the to path in relation to this given, known path.)</p>
 </li>
 </ul></div></div><div class="code"><div class="wrapper">    <span class="hljs-string">'resolve'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">resolve</span><span class="hljs-params">(to, from)</span> {</span>
-        <span class="hljs-keyword">var</span> parent = <span class="hljs-keyword">this</span>.__proto__;
+        <span class="hljs-keyword">var</span> parent = <span class="hljs-keyword">this</span>.__proto__.__proto__;
 
         <span class="hljs-keyword">if</span> (utils.startsWith(to, <span class="hljs-keyword">this</span>.root)) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>base path</p></div></div><div class="code"><div class="wrapper">            <span class="hljs-keyword">return</span> to;
         }
