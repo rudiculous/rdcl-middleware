@@ -13,14 +13,19 @@
 <p><strong>Returns a Function</strong></p></div></div><div class="code"><div class="wrapper">module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setupProductionAssets</span><span class="hljs-params">(options)</span> {</span>
     <span class="hljs-keyword">var</span> manifest = options.manifest;
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">assets</span><span class="hljs-params">(req, res, next)</span> {</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> function</span></p>
-<p>Create a script-tag.</p></div></div><div class="code"><div class="wrapper">        res.locals.add_javascript_tag = addTagFactory(manifest, options.assetsBaseURI, <span class="hljs-string">'javascripts'</span>, <span class="hljs-string">'script'</span>, <span class="hljs-string">'src'</span>, {
-            <span class="hljs-string">'type'</span>: <span class="hljs-string">'text/javascript'</span>,
-        }, utils.html.OPENCLOSE);</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> function</span></p>
-<p>Create a link rel=&quot;stylesheet&quot; tag.</p></div></div><div class="code"><div class="wrapper">        res.locals.add_stylesheet_link = addTagFactory(manifest, options.assetsBaseURI, <span class="hljs-string">'stylesheets'</span>, <span class="hljs-string">'link'</span>, <span class="hljs-string">'href'</span>, {
-            <span class="hljs-string">'rel'</span>: <span class="hljs-string">'stylesheet'</span>,
-            <span class="hljs-string">'type'</span>: <span class="hljs-string">'text/css'</span>,
-        }, utils.html.AUTOCLOSE);
+    <span class="hljs-keyword">var</span> addJavascriptTag = addTagFactory(manifest, options.assetsBaseURI, <span class="hljs-string">'javascripts'</span>, <span class="hljs-string">'script'</span>, <span class="hljs-string">'src'</span>, {
+        <span class="hljs-string">'type'</span>: <span class="hljs-string">'text/javascript'</span>,
+    }, utils.html.OPENCLOSE);
+
+    <span class="hljs-keyword">var</span> addStylesheetTag = addTagFactory(manifest, options.assetsBaseURI, <span class="hljs-string">'stylesheets'</span>, <span class="hljs-string">'link'</span>, <span class="hljs-string">'href'</span>, {
+        <span class="hljs-string">'rel'</span>: <span class="hljs-string">'stylesheet'</span>,
+        <span class="hljs-string">'type'</span>: <span class="hljs-string">'text/css'</span>,
+    }, utils.html.AUTOCLOSE);
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">assets</span><span class="hljs-params">(req, res, next)</span> {</span>
+        res.locals.add_javascript_tag = addJavascriptTag;
+        res.locals.add_stylesheet_link = addStylesheetTag;
+        next();
     };
 
     assets.serveAssets = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res, next)</span> {</span>
