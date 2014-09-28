@@ -2,16 +2,25 @@
 <p>A collection of middleware and utility functions for Express JS.</p>
 <h1 id="assets">assets</h1>
 <p>The asset pipeline provides an easy way to serve assets from your
-Express application. It can run in one of two settings: <code>development</code> or
-<code>production</code>.</p>
+Express application. It can run in one of two modes: <code>development</code> or
+<code>production</code>. In both modes helper functions are created that are added
+to each request:</p>
+<ul>
+<li><code>add_javascript_tag</code></li>
+<li><code>add_stylesheet_link</code>
+These helper functions generate the correct HTML to be used to load an
+asset.</li>
+</ul>
 <h2 id="development">development</h2>
 <p>When in development, the asset pipeline expects an extended manifest,
 that describes what assets are available and how the assets should be
 built. The assets are built the first time they are requested and are
 then kept in memory.</p>
+<p>In development mode, files will not be concatenated. Instead, the helper
+functions will include all assets seperately.</p>
 <h2 id="production">production</h2>
 <p>When in production, the assets should have already been generated. When
-generating the assets (using the assets-task provided), a manifest.json
+generating the assets (using the assets task provided), a manifest.json
 file is created. This file contains information on which assets have
 been created and where they are stored.</p>
 <p>In production mode, assets should not be served by Express, so the serve
