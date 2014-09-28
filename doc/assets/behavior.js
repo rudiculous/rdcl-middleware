@@ -25,42 +25,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "slug": "rdcl-middelware",
             "isFileHeader": true
           },
-          "depth": 1,
-          "children": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 2,
-                "title": "Getting Started",
-                "slug": "getting-started"
-              },
-              "depth": 2
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 2,
-                "title": "Documentation",
-                "slug": "documentation"
-              },
-              "depth": 2
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 2,
-                "title": "Examples",
-                "slug": "examples"
-              },
-              "depth": 2
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 2,
-                "title": "Release History",
-                "slug": "release-history"
-              },
-              "depth": 2
-            }
-          ]
+          "depth": 1
         },
         "title": "rdcl-middelware"
       },
@@ -69,35 +34,54 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         {
           "type": "heading",
           "data": {
-            "level": 2,
-            "title": "Getting Started",
-            "slug": "getting-started"
+            "level": 1,
+            "title": "assets",
+            "slug": "assets"
           },
-          "depth": 2
+          "depth": 1,
+          "children": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 2,
+                "title": "development",
+                "slug": "development"
+              },
+              "depth": 2
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 2,
+                "title": "production",
+                "slug": "production"
+              },
+              "depth": 2
+            }
+          ]
         }, {
           "type": "heading",
           "data": {
-            "level": 2,
-            "title": "Documentation",
-            "slug": "documentation"
+            "level": 1,
+            "title": "TemplateLoader",
+            "slug": "templateloader"
           },
-          "depth": 2
+          "depth": 1
         }, {
           "type": "heading",
           "data": {
-            "level": 2,
-            "title": "Examples",
-            "slug": "examples"
+            "level": 1,
+            "title": "Logger",
+            "slug": "logger"
           },
-          "depth": 2
+          "depth": 1
         }, {
           "type": "heading",
           "data": {
-            "level": 2,
-            "title": "Release History",
-            "slug": "release-history"
+            "level": 1,
+            "title": "utilities",
+            "slug": "utilities"
           },
-          "depth": 2
+          "depth": 1
         }
       ]
     }, {
