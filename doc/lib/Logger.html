@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="en"><head><title>lib/Logger</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib/Logger"><meta name="groc-project-path" content="lib/Logger.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/Logger.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">"use strict"</span>;</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Dependencies. </p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">var</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>log levels </p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">var</span> __levels = {
+    <span class="hljs-string">'ERROR'</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-string">'WARNING'</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-string">'INFO'</span>: <span class="hljs-number">2</span>,
+    <span class="hljs-string">'DEBUG'</span>: <span class="hljs-number">3</span>,
+};</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> class and augments console</span></p>
+<p>Parameters:</p>
+<ul>
+<li><strong>level is optional, must be a String, and has a default value of INFO.</strong><br/>(Which logs should be displayed?)</li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Logger</span><span class="hljs-params">(level)</span> {</span>
+    <span class="hljs-keyword">this</span>.__proto__.__proto__ = console;
+
+    <span class="hljs-keyword">if</span> (level !== <span class="hljs-literal">undefined</span>) {
+        <span class="hljs-keyword">this</span>.level(level);
+    }
+}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Public methods. </p></div></div><div class="code"><div class="wrapper">Logger.prototype = {</div></div></div><div class="segment"><div class="comments doc-section doc-section-private"><div class="wrapper"><p><span class='doc-section-header'>Private</span></p></div></div><div class="code"><div class="wrapper">    <span class="hljs-string">'__lvl'</span>: __levels[<span class="hljs-string">'INFO'</span>],</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Sets or gets the log level.</p>
+<p>Parameters:</p>
+<ul>
+<li><strong>level is optional and must be a String.</strong><br/>(If present, sets the log level.)</li>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="hljs-string">'level'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">level</span><span class="hljs-params">(level)</span> {</span>
+        <span class="hljs-keyword">var</span> lvl;
+
+        <span class="hljs-keyword">if</span> (level === <span class="hljs-literal">undefined</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.__lvl;
+        }
+        <span class="hljs-keyword">else</span> {
+            level = <span class="hljs-built_in">String</span>(level).toUpperCase();
+
+            lvl = __levels[level];
+
+            <span class="hljs-keyword">if</span> (lvl === <span class="hljs-literal">undefined</span>) {
+                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'invalid log level, '</span> + level);
+            }
+
+            <span class="hljs-keyword">this</span>.__lvl = lvl;
+        }
+    },</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Writes an error message to stderr.</p>
+<p>Parameters:</p>
+<ul>
+<li><strong>message must be a *.</strong><br/>(The message to be written.)</li>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="hljs-string">'error'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">error</span><span class="hljs-params">(message)</span> {</span>
+        _write.call(<span class="hljs-keyword">this</span>, process.stderr, <span class="hljs-string">'ERROR'</span>, <span class="hljs-built_in">arguments</span>);
+    },</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Writes a warning message to stderr.</p>
+<p>Parameters:</p>
+<ul>
+<li><strong>message must be a *.</strong><br/>(The message to be written.)</li>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="hljs-string">'warning'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">warning</span><span class="hljs-params">(message)</span> {</span>
+        _write.call(<span class="hljs-keyword">this</span>, process.stderr, <span class="hljs-string">'WARNING'</span>, <span class="hljs-built_in">arguments</span>);
+    },</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Writes an info message to stdout.</p>
+<p>Parameters:</p>
+<ul>
+<li><strong>message must be a *.</strong><br/>(The message to be written.)</li>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="hljs-string">'info'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">info</span><span class="hljs-params">(message)</span> {</span>
+        _write.call(<span class="hljs-keyword">this</span>, process.stdout, <span class="hljs-string">'INFO'</span>, <span class="hljs-built_in">arguments</span>);
+    },</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Writes a debug message to stdout.</p>
+<p>Parameters:</p>
+<ul>
+<li><strong>message must be a *.</strong><br/>(The message to be written.)</li>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="hljs-string">'debug'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">debug</span><span class="hljs-params">(message)</span> {</span>
+        _write.call(<span class="hljs-keyword">this</span>, process.stdout, <span class="hljs-string">'DEBUG'</span>, <span class="hljs-built_in">arguments</span>);
+    },
+};</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Private methods. Should be called with <code>.call(this, ...)</code>. </p></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Pads a numeric value.</p>
+<p>Parameters:</p>
+<ul>
+<li><strong>nr must be a Number.</strong></li>
+</ul>
+<p><strong>Returns a String</strong></p></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_pad</span><span class="hljs-params">(nr)</span> {</span>
+    <span class="hljs-keyword">return</span> (nr &lt; <span class="hljs-number">10</span> ? <span class="hljs-string">'0'</span> : <span class="hljs-string">''</span>) + <span class="hljs-built_in">String</span>(nr);
+}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a formatted date.</p>
+<p><strong>Returns a String</strong></p></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_formatDate</span><span class="hljs-params">()</span> {</span>
+    <span class="hljs-keyword">var</span> now = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+
+    <span class="hljs-keyword">return</span> [
+        now.getFullYear(),
+        _pad.call(<span class="hljs-keyword">this</span>, now.getMonth()),
+        _pad.call(<span class="hljs-keyword">this</span>, now.getDate()),
+    ].join(<span class="hljs-string">'-'</span>) + <span class="hljs-string">' '</span> + [
+        _pad.call(<span class="hljs-keyword">this</span>, now.getHours()),
+        _pad.call(<span class="hljs-keyword">this</span>, now.getMinutes()),
+    ].join(<span class="hljs-string">':'</span>);
+}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Writes a message to <code>stream</code>.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>stream must be a Stream.</strong><br/>(A stream object.)</p>
+</li>
+<li><p><strong>level must be a String.</strong><br/>(The level at which this message is written.)</p>
+</li>
+<li><p><strong>messages must be an Array.</strong><br/>(An array of messages to be shown.)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_write</span><span class="hljs-params">(stream, level, messages)</span> {</span>
+    <span class="hljs-keyword">var</span> date = _formatDate.call(<span class="hljs-keyword">this</span>);
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.level() &lt; __levels[level]) {
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-keyword">var</span> output = util.format.apply({}, messages);
+    output.split(<span class="hljs-string">'\n'</span>).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(message)</span> {</span>
+        stream.write(util.format(<span class="hljs-string">'[%s][%s] %s\n'</span>, date, level, message));
+    });
+}
+
+module.exports = Logger;</div></div></div></div></body></html>
