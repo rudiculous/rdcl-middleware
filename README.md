@@ -8,8 +8,10 @@ The asset pipeline provides an easy way to serve assets from your
 Express application. It can run in one of two modes: `development` or
 `production`. In both modes helper functions are created that are added
 to each request:
+
 * `add_javascript_tag`
 * `add_stylesheet_link`
+
 These helper functions generate the correct HTML to be used to load an
 asset.
 
