@@ -21,8 +21,8 @@
     <span class="hljs-keyword">var</span> constructor;
 
     <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.length === <span class="hljs-number">1</span>) {
-        proto = parent;
-        parent = <span class="hljs-built_in">Object</span>.prototype;
+        proto = <span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>];
+        parentProto = <span class="hljs-built_in">Object</span>.prototype;
     }
 
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span>(proto.constructor) === <span class="hljs-string">'function'</span>) {
@@ -35,7 +35,7 @@
     <span class="hljs-keyword">delete</span> proto.constructor;
 
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span>(parentProto) === <span class="hljs-string">'function'</span>) {
-        parentProto = parent.prototype;
+        parentProto = parentProto.prototype;
     }
 
     constructor.prototype = <span class="hljs-built_in">Object</span>.create(parentProto);
