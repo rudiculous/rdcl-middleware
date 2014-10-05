@@ -3,9 +3,11 @@
 <span class="hljs-keyword">var</span> EventEmitter = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>).EventEmitter;
 <span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
 <span class="hljs-keyword">var</span> less = <span class="hljs-built_in">require</span>(<span class="hljs-string">'less'</span>);
+<span class="hljs-keyword">var</span> reactTools = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-tools'</span>);
 <span class="hljs-keyword">var</span> uglifyjs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'uglify-js'</span>);
 <span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./helpers'</span>);
 <span class="hljs-keyword">var</span> utils = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../utilities'</span>);</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Registers a task that compiles assets.</p>
+<p>TODO: Use <code>Q.all</code>.</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>grunt must be a Grunt.</strong></p>
@@ -20,17 +22,29 @@
 </li>
 </ul></div></div><div class="code"><div class="wrapper">module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt, options)</span> {</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> task uglify</span></p></div></div><div class="code"><div class="wrapper">    grunt.task.registerTask(<span class="hljs-string">'assets'</span>, <span class="hljs-string">'Compiles assets.'</span>,
         <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-            <span class="hljs-keyword">var</span> scripts = options.manifest.javascripts;
-            <span class="hljs-keyword">var</span> styles = options.manifest.stylesheets;
+            <span class="hljs-keyword">var</span> javascriptFiles = helpers.resolveGlobs(
+                options.root,
+                options.manifest.options.paths,
+                <span class="hljs-string">'javascripts'</span>,
+                options.manifest.javascripts
+            );
+
+            <span class="hljs-keyword">var</span> stylesheetFiles = helpers.resolveGlobs(
+                options.root,
+                options.manifest.options.paths,
+                <span class="hljs-string">'stylesheets'</span>,
+                options.manifest.stylesheets
+            );
+
             <span class="hljs-keyword">var</span> done = <span class="hljs-keyword">this</span>.async();
 
             <span class="hljs-keyword">var</span> emitter = <span class="hljs-keyword">new</span> EventEmitter();
             <span class="hljs-keyword">var</span> components = {};
 
-            <span class="hljs-built_in">Object</span>.keys(scripts).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
+            <span class="hljs-built_in">Object</span>.keys(javascriptFiles).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
                 components[name] = <span class="hljs-literal">null</span>;
             });
-            <span class="hljs-built_in">Object</span>.keys(styles).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
+            <span class="hljs-built_in">Object</span>.keys(stylesheetFiles).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
                 components[name] = <span class="hljs-literal">null</span>;
             });
 
@@ -42,8 +56,8 @@
                 fs.mkdirSync(options.assetsDir);
             }
 
-            <span class="hljs-built_in">Object</span>.keys(scripts).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
-                <span class="hljs-keyword">var</span> files = utils.copy(scripts[name]);
+            <span class="hljs-built_in">Object</span>.keys(javascriptFiles).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
+                <span class="hljs-keyword">var</span> files = utils.copy(javascriptFiles[name]);
                 <span class="hljs-keyword">if</span> (files.length) {
                     processJavascript(name, files, emitter, options);
                 }
@@ -52,8 +66,8 @@
                 }
             });
 
-            <span class="hljs-built_in">Object</span>.keys(styles).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
-                <span class="hljs-keyword">var</span> files = utils.copy(styles[name]);
+            <span class="hljs-built_in">Object</span>.keys(stylesheetFiles).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
+                <span class="hljs-keyword">var</span> files = utils.copy(stylesheetFiles[name]);
                 <span class="hljs-keyword">if</span> (files.length) {
                     processStylesheet(name, files, emitter, options);
                 }
@@ -129,6 +143,8 @@
         });
     }
 }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Processes a javascript.</p>
+<p>TODO: What to do with vendor scripts that already have a minified version?</p>
+<p>TODO: Is it safe to minify JSX files?</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>name must be a String.</strong><br/>(The name of the javascript to process.)</p>
@@ -140,22 +156,28 @@
 <li><p><strong>options must be an Object.</strong><br/>(The options object.)</p>
 </li>
 </ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">processJavascript</span><span class="hljs-params">(name, files, emitter, options)</span> {</span>
-    utils.asyncMap(files, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapMethod</span><span class="hljs-params">(value, next)</span> {</span>
-        helpers.resolve(options.root, options.manifest.options.paths, pathM.join(<span class="hljs-string">'javascripts'</span>, value), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(found, resolved)</span> {</span>
-            <span class="hljs-keyword">if</span> (!found) {
-                console.error(<span class="hljs-string">'File '</span> + value + <span class="hljs-string">' not found!'</span>);
+    utils.asyncMap(files, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapMethod</span><span class="hljs-params">(file, next)</span> {</span>
+        fs.readFile(file, <span class="hljs-string">'utf-8'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, data)</span> {</span>
+            <span class="hljs-keyword">if</span> (err) {
+                console.error(err);
                 emitter.emit(<span class="hljs-string">'component:updated'</span>, {
                     <span class="hljs-string">'name'</span>: name,
                     <span class="hljs-string">'success'</span>: <span class="hljs-literal">false</span>,
-                    <span class="hljs-string">'message'</span>: <span class="hljs-string">'File '</span> + value + <span class="hljs-string">' not found!'</span>
+                    <span class="hljs-string">'message'</span>: err
                 });
             }
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (file.match(<span class="hljs-regexp">/\.jsx$/</span>)) {
+                next(reactTools.transform(data));
+            }
             <span class="hljs-keyword">else</span> {
-                next(resolved);
+                next(data);
             }
         });
     }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapCallback</span><span class="hljs-params">(files)</span> {</span>
-        <span class="hljs-keyword">var</span> result = uglifyjs.minify(files).code;
+        <span class="hljs-keyword">var</span> result = uglifyjs.minify(files, {
+            <span class="hljs-comment">//'warnings': true,</span>
+            <span class="hljs-string">'fromString'</span>: <span class="hljs-literal">true</span>,
+        }).code;
 
         writeAsset(result, name, emitter, options);
     });
@@ -178,18 +200,18 @@
         <span class="hljs-string">'filename'</span>: name,
     });
     
-    utils.asyncMap(files, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapMethod</span><span class="hljs-params">(value, next)</span> {</span>
-        helpers.resolve(options.root, options.manifest.options.paths, pathM.join(<span class="hljs-string">'stylesheets'</span>, value), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(found, resolved)</span> {</span>
-            <span class="hljs-keyword">if</span> (!found) {
-                console.error(<span class="hljs-string">'File '</span> + value + <span class="hljs-string">' not found!'</span>);
+    utils.asyncMap(files, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapMethod</span><span class="hljs-params">(file, next)</span> {</span>
+        fs.readFile(file, <span class="hljs-string">'utf-8'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, data)</span> {</span>
+            <span class="hljs-keyword">if</span> (err) {
+                console.error(err);
                 emitter.emit(<span class="hljs-string">'component:updated'</span>, {
                     <span class="hljs-string">'name'</span>: name,
                     <span class="hljs-string">'success'</span>: <span class="hljs-literal">false</span>,
-                    <span class="hljs-string">'message'</span>: <span class="hljs-string">'File '</span> + value + <span class="hljs-string">' not found!'</span>
+                    <span class="hljs-string">'message'</span>: err
                 });
             }
-            <span class="hljs-keyword">else</span> {
-                fs.readFile(resolved, <span class="hljs-string">'utf-8'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, data)</span> {</span>
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (file.match(<span class="hljs-regexp">/\.less$/</span>)) {
+                parser.parse(data, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, tree)</span> {</span>
                     <span class="hljs-keyword">if</span> (err) {
                         console.error(err);
                         emitter.emit(<span class="hljs-string">'component:updated'</span>, {
@@ -199,29 +221,15 @@
                         });
                     }
                     <span class="hljs-keyword">else</span> {
-                        <span class="hljs-keyword">if</span> (resolved.match(<span class="hljs-regexp">/\.less$/</span>)) {
-                            parser.parse(data, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, tree)</span> {</span>
-                                <span class="hljs-keyword">if</span> (err) {
-                                    console.error(err);
-                                    emitter.emit(<span class="hljs-string">'component:updated'</span>, {
-                                        <span class="hljs-string">'name'</span>: name,
-                                        <span class="hljs-string">'success'</span>: <span class="hljs-literal">false</span>,
-                                        <span class="hljs-string">'message'</span>: err
-                                    });
-                                }
-                                <span class="hljs-keyword">else</span> {
-                                    <span class="hljs-keyword">var</span> val = tree.toCSS({
-                                        <span class="hljs-string">'compress'</span>: <span class="hljs-literal">true</span>
-                                    });
-                                    next(val);
-                                }
-                            });
-                        }
-                        <span class="hljs-keyword">else</span> {
-                            next(data);
-                        }
+                        <span class="hljs-keyword">var</span> val = tree.toCSS({
+                            <span class="hljs-string">'compress'</span>: <span class="hljs-literal">true</span>
+                        });
+                        next(val);
                     }
                 });
+            }
+            <span class="hljs-keyword">else</span> {
+                next(data);
             }
         });
     }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapCallback</span><span class="hljs-params">(files)</span> {</span>
