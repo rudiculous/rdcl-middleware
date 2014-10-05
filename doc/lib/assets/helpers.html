@@ -33,9 +33,7 @@ during initialization. It should <em>never</em> run during requests!</p>
                     resolved.push(res);
                 });
             });
-        });
-
-        result[file] = resolved;
+        });</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>TODO: Remove duplicates from <code>resolved</code>. </p></div></div><div class="code"><div class="wrapper">        result[file] = resolved;
     }
 
     <span class="hljs-keyword">return</span> result;
