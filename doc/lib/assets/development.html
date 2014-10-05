@@ -63,7 +63,7 @@
             <span class="hljs-keyword">return</span> assetCache[url].serve(res);
         }
 
-        fs.readFile(pathM.join(options.root, url), <span class="hljs-string">'utf8'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, data)</span> {</span>
+        fs.readFile(pathM.join(options.root, url), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, data)</span> {</span>
             <span class="hljs-keyword">var</span> contentType = <span class="hljs-string">'text/plain; charset=utf-8'</span>;
 
             <span class="hljs-keyword">if</span> (err) {
@@ -79,7 +79,7 @@
             <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.jsx$/</span>)) {
                 contentType = <span class="hljs-string">'application/javascript; charset=utf-8'</span>;
 
-                <span class="hljs-keyword">var</span> transformed = reactTools.transform(data, {
+                <span class="hljs-keyword">var</span> transformed = reactTools.transform(data.toString(<span class="hljs-string">'utf-8'</span>), {
                     <span class="hljs-string">'sourceMap'</span>: <span class="hljs-literal">true</span>,
                     <span class="hljs-string">'filename'</span>: url,
                 });
@@ -101,7 +101,7 @@
                     <span class="hljs-string">'filename'</span>: url,
                 });
 
-                lessParser.parse(data, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, tree)</span> {</span>
+                lessParser.parse(data.toString(<span class="hljs-string">'utf-8'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, tree)</span> {</span>
                     <span class="hljs-keyword">if</span> (err) {
                         <span class="hljs-keyword">return</span> next(err);
                     }
@@ -114,6 +114,41 @@
                     <span class="hljs-keyword">return</span> assetCache[url].serve(res);
                 });
                 <span class="hljs-keyword">return</span>;
+            }
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.(gif|jpe?g|png)$/</span>)) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>image assets</p></div></div><div class="code"><div class="wrapper">                <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.gif$/</span>)) {
+                    contentType = <span class="hljs-string">'image/gif'</span>;
+                }
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.jpe?g$/</span>)) {
+                    contentType = <span class="hljs-string">'image/jpeg'</span>;
+                }
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.png$/</span>)) {
+                    contentType = <span class="hljs-string">'image/png'</span>;
+                }
+                <span class="hljs-keyword">else</span> {
+                    console.warn(<span class="hljs-string">'Unknown content type for '</span> + url);
+                }
+
+                assetCache[url] = <span class="hljs-keyword">new</span> Asset(contentType, data);
+                <span class="hljs-keyword">return</span> assetCache[url].serve(res);
+            }
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.(woff|eot|svg|ttf)$/</span>)) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>font assets</p></div></div><div class="code"><div class="wrapper">                <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.woff$/</span>)) {
+                    contentType = <span class="hljs-string">'application/x-font-woff'</span>;
+                }
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.ttf$/</span>)) {
+                    contentType = <span class="hljs-string">'application/octet-stream'</span>;
+                }
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.eot$/</span>)) {
+                    contentType = <span class="hljs-string">'application/vnd.ms-fontobject'</span>;
+                }
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.svg$/</span>)) {
+                    contentType = <span class="hljs-string">'image/svg+xml; charset=utf-8'</span>;
+                }
+                <span class="hljs-keyword">else</span> {
+                    console.warn(<span class="hljs-string">'Unknown content type for '</span> + url);
+                }
+
+                assetCache[url] = <span class="hljs-keyword">new</span> Asset(contentType, data);
+                <span class="hljs-keyword">return</span> assetCache[url].serve(res);
             }
         });
     };
