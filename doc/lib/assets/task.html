@@ -19,6 +19,8 @@
 </li>
 <li><p><strong>options.assetsDir must be a String.</strong><br/>(Assets are written to this directory.)</p>
 </li>
+<li><p><strong>options.staticBase must be a String.</strong><br/>(Assets will be served from this location (used for appcache).)</p>
+</li>
 </ul>
 </li>
 </ul></div></div><div class="code"><div class="wrapper">module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt, options)</span> {</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> task uglify</span></p></div></div><div class="code"><div class="wrapper">    grunt.task.registerTask(<span class="hljs-string">'assets'</span>, <span class="hljs-string">'Compiles assets.'</span>,
@@ -127,7 +129,22 @@
     
     <span class="hljs-keyword">if</span> (status) {
         <span class="hljs-keyword">var</span> staticManifest = <span class="hljs-built_in">JSON</span>.stringify(components);
+        <span class="hljs-keyword">var</span> appcacheData;
         <span class="hljs-keyword">var</span> fileName = pathM.join(options.assetsDir, <span class="hljs-string">'manifest.json'</span>);
+        <span class="hljs-keyword">var</span> appcache = pathM.join(options.assetsDir, <span class="hljs-string">'manifest.appcache'</span>);
+
+        <span class="hljs-keyword">if</span> (options.staticBase) {
+            appcacheData = <span class="hljs-string">'CACHE MANIFEST\n'</span>;
+
+            <span class="hljs-built_in">Object</span>.keys(components).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span> {</span>
+                <span class="hljs-keyword">var</span> file = components[key];
+                appcacheData += options.staticBase + <span class="hljs-string">'/'</span> + file + <span class="hljs-string">'\n'</span>;
+            });
+
+            <span class="hljs-keyword">if</span> (fs.existsSync(appcache)) {
+                fs.truncateSync(appcache);
+            }
+        }
     
         <span class="hljs-keyword">if</span> (fs.existsSync(fileName)) {
             fs.truncateSync(fileName);
@@ -139,7 +156,22 @@
                 done(err);
             }
             <span class="hljs-keyword">else</span> {
-                done();
+                console.log(<span class="hljs-string">'Written file manifest.json.'</span>);
+                <span class="hljs-keyword">if</span> (appcacheData) {
+                    fs.appendFile(appcache, appcacheData, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> {</span>
+                        <span class="hljs-keyword">if</span> (err) {
+                            console.error(err);
+                            done(err);
+                        }
+                        <span class="hljs-keyword">else</span> {
+                            console.log(<span class="hljs-string">'Written file manifest.appcache.'</span>);
+                            done();
+                        }
+                    });
+                }
+                <span class="hljs-keyword">else</span> {
+                    done();
+                }
             }
         });
     }

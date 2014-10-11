@@ -51,9 +51,14 @@
         <span class="hljs-string">'type'</span>: <span class="hljs-string">'text/css'</span>,
     }, utils.html.AUTOCLOSE);
 
+    <span class="hljs-keyword">var</span> getAppcacheAttr = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getAppcacheAttr</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+    };
+
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">assets</span><span class="hljs-params">(req, res, next)</span> {</span>
         res.locals.add_javascript_tag = addJavascriptTag;
         res.locals.add_stylesheet_link = addStylesheetTag;
+        res.locals.appcache_attr = getAppcacheAttr;
         next();
     };
 
