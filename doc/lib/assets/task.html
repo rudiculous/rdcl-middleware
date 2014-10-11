@@ -3,6 +3,7 @@
 <span class="hljs-keyword">var</span> EventEmitter = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>).EventEmitter;
 <span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
 <span class="hljs-keyword">var</span> coffee = <span class="hljs-built_in">require</span>(<span class="hljs-string">'coffee-script'</span>);
+<span class="hljs-keyword">var</span> coffeeReact = <span class="hljs-built_in">require</span>(<span class="hljs-string">'coffee-react'</span>);
 <span class="hljs-keyword">var</span> less = <span class="hljs-built_in">require</span>(<span class="hljs-string">'less'</span>);
 <span class="hljs-keyword">var</span> reactTools = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-tools'</span>);
 <span class="hljs-keyword">var</span> uglifyjs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'uglify-js'</span>);
@@ -201,6 +202,9 @@
             }
             <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (file.match(<span class="hljs-regexp">/\.jsx$/</span>)) {
                 next(reactTools.transform(data));
+            }
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (file.match(<span class="hljs-regexp">/\.cjsx$/</span>)) {
+                next(coffee.compile(coffeeReact.transform(data)));
             }
             <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (file.match(<span class="hljs-regexp">/\.coffee$/</span>)) {
                 next(coffee.compile(data));

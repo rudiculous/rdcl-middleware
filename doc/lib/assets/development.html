@@ -1,6 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><title>lib/assets/development</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib/assets/development"><meta name="groc-project-path" content="lib/assets/development.js"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/assets/development.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">"use strict"</span>;</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Dependencies. </p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
 <span class="hljs-keyword">var</span> pathM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
 <span class="hljs-keyword">var</span> coffee = <span class="hljs-built_in">require</span>(<span class="hljs-string">'coffee-script'</span>);
+<span class="hljs-keyword">var</span> coffeeReact = <span class="hljs-built_in">require</span>(<span class="hljs-string">'coffee-react'</span>);
 <span class="hljs-keyword">var</span> less = <span class="hljs-built_in">require</span>(<span class="hljs-string">'less'</span>);
 <span class="hljs-keyword">var</span> reactTools = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-tools'</span>);
 <span class="hljs-keyword">var</span> etag = <span class="hljs-built_in">require</span>(<span class="hljs-string">'etag'</span>);
@@ -108,6 +109,28 @@
                 });
 
                 assetCache[url] = <span class="hljs-keyword">new</span> Asset(contentType, transformed);
+                <span class="hljs-keyword">return</span> assetCache[url].serve(res);
+            }
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.cjsx$/</span>)) {
+                contentType = <span class="hljs-string">'application/javascript; charset=utf-8'</span>;
+
+                <span class="hljs-keyword">var</span> transformed = coffeeReact.transform(data.toString(<span class="hljs-string">'utf-8'</span>), {
+                    <span class="hljs-string">'sourceMap'</span>: <span class="hljs-literal">true</span>,
+                    <span class="hljs-string">'filename'</span>: url,
+                });
+
+                <span class="hljs-keyword">var</span> compiled = coffee.compile(transformed, {
+                    <span class="hljs-string">'sourceMap'</span>: <span class="hljs-literal">true</span>,
+                    <span class="hljs-string">'filename'</span>: url,
+                });
+
+                <span class="hljs-keyword">var</span> sourceMapUrl = url.replace(<span class="hljs-regexp">/\.cjsx$/</span>, <span class="hljs-string">'.map'</span>);
+                assetCache[sourceMapUrl] = <span class="hljs-keyword">new</span> Asset(
+                    <span class="hljs-string">'application/octet-stream'</span>,
+                    compiled.v3SourceMap
+                );
+
+                assetCache[url] = <span class="hljs-keyword">new</span> Asset(contentType, compiled.js);
                 <span class="hljs-keyword">return</span> assetCache[url].serve(res);
             }
             <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (url.match(<span class="hljs-regexp">/\.css$/</span>)) {
