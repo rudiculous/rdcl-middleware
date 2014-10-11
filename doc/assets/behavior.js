@@ -96,16 +96,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "type": "file",
           "data": {
             "language": {
-              "nameMatchers": [".js"],
-              "pygmentsLexer": "javascript",
-              "multiLineComment": ["/*", "*", "*/"],
-              "singleLineComment": ["//"],
+              "nameMatchers": [".coffee", "Cakefile"],
+              "pygmentsLexer": "coffee-script",
+              "highlightJS": "coffeescript",
+              "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+              "strictMultiLineEnd": false,
+              "singleLineComment": ["#"],
               "ignorePrefix": "}",
               "foldPrefix": "^",
-              "name": "JavaScript"
+              "name": "CoffeeScript"
             },
-            "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/Logger.js",
-            "projectPath": "lib/Logger.js",
+            "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/Logger.coffee",
+            "projectPath": "lib/Logger.coffee",
             "targetPath": "lib/Logger",
             "pageTitle": "lib/Logger",
             "title": "Logger"
@@ -116,16 +118,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "type": "file",
           "data": {
             "language": {
-              "nameMatchers": [".js"],
-              "pygmentsLexer": "javascript",
-              "multiLineComment": ["/*", "*", "*/"],
-              "singleLineComment": ["//"],
+              "nameMatchers": [".coffee", "Cakefile"],
+              "pygmentsLexer": "coffee-script",
+              "highlightJS": "coffeescript",
+              "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+              "strictMultiLineEnd": false,
+              "singleLineComment": ["#"],
               "ignorePrefix": "}",
               "foldPrefix": "^",
-              "name": "JavaScript"
+              "name": "CoffeeScript"
             },
-            "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/TemplateLoader.js",
-            "projectPath": "lib/TemplateLoader.js",
+            "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/TemplateLoader.coffee",
+            "projectPath": "lib/TemplateLoader.coffee",
             "targetPath": "lib/TemplateLoader",
             "pageTitle": "lib/TemplateLoader",
             "title": "TemplateLoader"
@@ -144,16 +148,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "type": "file",
               "data": {
                 "language": {
-                  "nameMatchers": [".js"],
-                  "pygmentsLexer": "javascript",
-                  "multiLineComment": ["/*", "*", "*/"],
-                  "singleLineComment": ["//"],
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "highlightJS": "coffeescript",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
                   "ignorePrefix": "}",
                   "foldPrefix": "^",
-                  "name": "JavaScript"
+                  "name": "CoffeeScript"
                 },
-                "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/assets/development.js",
-                "projectPath": "lib/assets/development.js",
+                "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/assets/development.coffee",
+                "projectPath": "lib/assets/development.coffee",
                 "targetPath": "lib/assets/development",
                 "pageTitle": "lib/assets/development",
                 "title": "development"
@@ -164,16 +170,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "type": "file",
               "data": {
                 "language": {
-                  "nameMatchers": [".js"],
-                  "pygmentsLexer": "javascript",
-                  "multiLineComment": ["/*", "*", "*/"],
-                  "singleLineComment": ["//"],
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "highlightJS": "coffeescript",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
                   "ignorePrefix": "}",
                   "foldPrefix": "^",
-                  "name": "JavaScript"
+                  "name": "CoffeeScript"
                 },
-                "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/assets/helpers.js",
-                "projectPath": "lib/assets/helpers.js",
+                "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/assets/helpers.coffee",
+                "projectPath": "lib/assets/helpers.coffee",
                 "targetPath": "lib/assets/helpers",
                 "pageTitle": "lib/assets/helpers",
                 "title": "helpers"
@@ -184,16 +192,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "type": "file",
               "data": {
                 "language": {
-                  "nameMatchers": [".js"],
-                  "pygmentsLexer": "javascript",
-                  "multiLineComment": ["/*", "*", "*/"],
-                  "singleLineComment": ["//"],
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "highlightJS": "coffeescript",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
                   "ignorePrefix": "}",
                   "foldPrefix": "^",
-                  "name": "JavaScript"
+                  "name": "CoffeeScript"
                 },
-                "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/assets/index.js",
-                "projectPath": "lib/assets/index.js",
+                "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/assets/index.coffee",
+                "projectPath": "lib/assets/index.coffee",
                 "targetPath": "lib/assets/index",
                 "pageTitle": "lib/assets/index",
                 "title": "index"
@@ -204,16 +214,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "type": "file",
               "data": {
                 "language": {
-                  "nameMatchers": [".js"],
-                  "pygmentsLexer": "javascript",
-                  "multiLineComment": ["/*", "*", "*/"],
-                  "singleLineComment": ["//"],
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "highlightJS": "coffeescript",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
                   "ignorePrefix": "}",
                   "foldPrefix": "^",
-                  "name": "JavaScript"
+                  "name": "CoffeeScript"
                 },
-                "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/assets/production.js",
-                "projectPath": "lib/assets/production.js",
+                "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/assets/production.coffee",
+                "projectPath": "lib/assets/production.coffee",
                 "targetPath": "lib/assets/production",
                 "pageTitle": "lib/assets/production",
                 "title": "production"
@@ -224,16 +236,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "type": "file",
               "data": {
                 "language": {
-                  "nameMatchers": [".js"],
-                  "pygmentsLexer": "javascript",
-                  "multiLineComment": ["/*", "*", "*/"],
-                  "singleLineComment": ["//"],
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "highlightJS": "coffeescript",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
                   "ignorePrefix": "}",
                   "foldPrefix": "^",
-                  "name": "JavaScript"
+                  "name": "CoffeeScript"
                 },
-                "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/assets/task.js",
-                "projectPath": "lib/assets/task.js",
+                "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/assets/task.coffee",
+                "projectPath": "lib/assets/task.coffee",
                 "targetPath": "lib/assets/task",
                 "pageTitle": "lib/assets/task",
                 "title": "task"
@@ -246,22 +260,34 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "type": "file",
           "data": {
             "language": {
-              "nameMatchers": [".js"],
-              "pygmentsLexer": "javascript",
-              "multiLineComment": ["/*", "*", "*/"],
-              "singleLineComment": ["//"],
+              "nameMatchers": [".coffee", "Cakefile"],
+              "pygmentsLexer": "coffee-script",
+              "highlightJS": "coffeescript",
+              "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+              "strictMultiLineEnd": false,
+              "singleLineComment": ["#"],
               "ignorePrefix": "}",
               "foldPrefix": "^",
-              "name": "JavaScript"
+              "name": "CoffeeScript"
             },
-            "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/utilities.js",
-            "projectPath": "lib/utilities.js",
+            "sourcePath": "/home/rj/webapps/rdcl-middleware/lib/utilities.coffee",
+            "projectPath": "lib/utilities.coffee",
             "targetPath": "lib/utilities",
             "pageTitle": "lib/utilities",
             "title": "utilities"
           },
           "depth": 2,
-          "outline": []
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "A collection of useful utility functions",
+                "slug": "a-collection-of-useful-utility-functions"
+              },
+              "depth": 1
+            }
+          ]
         }
       ]
     }

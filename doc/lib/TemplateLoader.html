@@ -1,26 +1,25 @@
-<!DOCTYPE html><html lang="en"><head><title>lib/TemplateLoader</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib/TemplateLoader"><meta name="groc-project-path" content="lib/TemplateLoader.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/TemplateLoader.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">"use strict"</span>;
+<!DOCTYPE html><html lang="en"><head><title>lib/TemplateLoader</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib/TemplateLoader"><meta name="groc-project-path" content="lib/TemplateLoader.coffee"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/TemplateLoader.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-string">"use strict"</span>
 
-<span class="hljs-keyword">var</span> swig = <span class="hljs-built_in">require</span>(<span class="hljs-string">'swig'</span>);
-<span class="hljs-keyword">var</span> utils = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./utilities'</span>);</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> class</span></p></div></div><div class="code"><div class="wrapper">module.exports = utils.klass(swig.loaders.fs(), {</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'>Constructor</span></p>
-<p>Parameters:</p>
+swig = <span class="hljs-built_in">require</span> <span class="hljs-string">'swig'</span>
+utils = <span class="hljs-built_in">require</span> <span class="hljs-string">'./utilities'</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TemplateLoader</span></span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Parameters:</p>
 <ul>
 <li><strong>templateRoot must be a String.</strong><br/>(The absolute path to the templates.)</li>
-</ul></div></div><div class="code"><div class="wrapper">    <span class="hljs-string">'constructor'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TemplateLoader</span><span class="hljs-params">(templateRoot)</span> {</span>
-        <span class="hljs-keyword">this</span>.root = templateRoot;
-    },</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Resolves <code>to</code> to an absolute path or unique identifier.</p>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@templateRoot</span>)</span> -&gt;</span>
+    <span class="hljs-property">@defaultLoader</span> = swig.loaders.fs()</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Resolves <code>to</code> to an absolute path or unique identifier.</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>to must be a String.</strong><br/>(Non-absolute identifier or pathname to a file.)</p>
 </li>
-<li><p><strong>from must be a String.</strong><br/>(If given, should attempt to find the to path in relation to this given, known path.)</p>
+<li><p><strong>from must be a String.</strong><br/>(If given, should attempt to find the path in relation to this given, known path.)</p>
 </li>
-</ul></div></div><div class="code"><div class="wrapper">    <span class="hljs-string">'resolve'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">resolve</span><span class="hljs-params">(to, from)</span> {</span>
-        <span class="hljs-keyword">if</span> (utils.startsWith(to, <span class="hljs-keyword">this</span>.root)) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>base path</p></div></div><div class="code"><div class="wrapper">            <span class="hljs-keyword">return</span> to;
-        }
-        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (utils.startsWith(to, <span class="hljs-string">'/'</span>)) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>absolute path</p></div></div><div class="code"><div class="wrapper">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.root + to;
-        }
-        <span class="hljs-keyword">else</span> {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>relative path</p></div></div><div class="code"><div class="wrapper">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.parent().resolve.apply(<span class="hljs-keyword">this</span>.parent(), <span class="hljs-built_in">arguments</span>);
-        }
-    },
+</ul></div></div><div class="code"><div class="wrapper">  <span class="hljs-attribute">resolve</span>: <span class="hljs-function"><span class="hljs-params">(to, from)</span> -&gt;</span>
+    <span class="hljs-keyword">if</span> utils.startsWith to, <span class="hljs-property">@templateRoot</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>base path</p></div></div><div class="code"><div class="wrapper">      to
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> utils.startsWith to, <span class="hljs-string">'/'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>absolute path</p></div></div><div class="code"><div class="wrapper">      <span class="hljs-property">@templateRoot</span> + to
+    <span class="hljs-keyword">else</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>relative path</p></div></div><div class="code"><div class="wrapper">      <span class="hljs-property">@defaultLoader</span>.resolve.apply(<span class="hljs-property">@defaultLoader</span>, arguments)
 
-});</div></div></div></div></body></html>
+  <span class="hljs-attribute">load</span>:<span class="hljs-function"> -&gt;</span>
+    <span class="hljs-property">@defaultLoader</span>.load.apply(<span class="hljs-property">@defaultLoader</span>, arguments)
+
+<span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = TemplateLoader</div></div></div></div></body></html>

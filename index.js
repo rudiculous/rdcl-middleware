@@ -1,5 +1,7 @@
 "use strict";
 
+require('coffee-script/register');
+
 /** A useful collection of utility functions. */
 module.exports.utilities = require('./lib/utilities');
 

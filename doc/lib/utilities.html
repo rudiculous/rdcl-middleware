@@ -1,12 +1,14 @@
-<!DOCTYPE html><html lang="en"><head><title>lib/utilities</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib/utilities"><meta name="groc-project-path" content="lib/utilities.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/utilities.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">"use strict"</span>;</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>A collection of useful utility functions.</p></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Checks if <code>obj</code> is defined.</p>
+<!DOCTYPE html><html lang="en"><head><title>lib/utilities</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib/utilities"><meta name="groc-project-path" content="lib/utilities.coffee"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/utilities.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-string">"use strict"</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h1 id="a-collection-of-useful-utility-functions">A collection of useful utility functions</h1></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Checks if <code>obj</code> is defined.</p>
 <p>Parameters:</p>
 <ul>
 <li><strong>obj must be an Object.</strong></li>
 </ul>
-<p><strong>Returns a Boolean</strong></p></div></div><div class="code"><div class="wrapper">exports.defined = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defined</span><span class="hljs-params">(obj)</span> {</span>
-    <span class="hljs-keyword">return</span> <span class="hljs-string">'undefined'</span> !== <span class="hljs-keyword">typeof</span> obj;
-};</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Creates a new prototype, optionally inheriting from <code>parent</code>.</p>
-<p>Prototypes created with this method will have a method named <code>parent()</code>, which gives easy access to the parent prototype.</p>
+<p><strong>Returns a Boolean</strong></p></div></div><div class="code"><div class="wrapper"><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">defined</span> = <span class="hljs-params">(obj)</span> -&gt;</span> <span class="hljs-keyword">typeof</span>(obj) <span class="hljs-keyword">isnt</span> <span class="hljs-string">'undefined'</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Creates a new prototype, optionally inherting from <code>parent</code>.
+Prototypes created with this method will have a method named
+<code>parent()</code>, which gives easy access to the parent prototype.
+The difference between this method and CoffeeScripts <code>class</code> is that
+this method uses prototypical inheritance, whereas <code>class</code> attempts
+classical inheritance.</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>parent is optional, can be a Function or an Object, and has a default value of Object.prototype.</strong><br/>(Inherit from this prototype.)</p>
@@ -17,70 +19,52 @@
 </ul>
 </li>
 </ul>
-<p><strong>Returns a Function</strong></p></div></div><div class="code"><div class="wrapper">exports.klass = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">klass</span><span class="hljs-params">(parentProto, proto)</span> {</span>
-    <span class="hljs-keyword">var</span> constructor;
+<p><strong>Returns a Function</strong></p></div></div><div class="code"><div class="wrapper"><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">klass</span> = <span class="hljs-params">(parentProto, proto)</span> -&gt;</span>
+  <span class="hljs-keyword">if</span> arguments.length <span class="hljs-keyword">is</span> <span class="hljs-number">1</span>
+    proto = arguments[<span class="hljs-number">0</span>]
+    parentProto = Object.prototype
 
-    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.length === <span class="hljs-number">1</span>) {
-        proto = <span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>];
-        parentProto = <span class="hljs-built_in">Object</span>.prototype;
-    }
+  constructor =
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">typeof</span>(proto.constructor) <span class="hljs-keyword">is</span> <span class="hljs-string">'function'</span>
+      proto.constructor
+    <span class="hljs-keyword">else</span><span class="hljs-function">
+      -&gt;</span>
 
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span>(proto.constructor) === <span class="hljs-string">'function'</span>) {
-        constructor = proto.constructor;
-    }
-    <span class="hljs-keyword">else</span> {
-        constructor = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">constructor</span><span class="hljs-params">()</span> {</span>};
-    }
+  <span class="hljs-keyword">delete</span> proto.constructor
 
-    <span class="hljs-keyword">delete</span> proto.constructor;
+  <span class="hljs-keyword">if</span> <span class="hljs-keyword">typeof</span>(parentProto) <span class="hljs-keyword">is</span> <span class="hljs-string">'function'</span>
+    parentProto = parentProto.prototype
 
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span>(parentProto) === <span class="hljs-string">'function'</span>) {
-        parentProto = parentProto.prototype;
-    }
+  constructor.prototype = Object.create parentProto
+  constructor.prototype.constructor = constructor
 
-    constructor.prototype = <span class="hljs-built_in">Object</span>.create(parentProto);
-    constructor.prototype.constructor = constructor;
+  Object.keys<span class="hljs-function"><span class="hljs-params">(proto)</span>.<span class="hljs-title">forEach</span> <span class="hljs-params">(key)</span> -&gt;</span>
+    constructor.prototype[key] = proto[key]
 
-    <span class="hljs-built_in">Object</span>.keys(proto).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span> {</span>
-        constructor.prototype[key] = proto[key];
-    });
+  constructor.prototype.<span class="hljs-function"><span class="hljs-title">parent</span> = -&gt;</span> Object.getPrototypeOf <span class="hljs-keyword">this</span>
 
-    constructor.prototype.parent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parent</span><span class="hljs-params">()</span> {</span>
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.getPrototypeOf(<span class="hljs-keyword">this</span>);
-    };
-
-    <span class="hljs-keyword">return</span> constructor;
-};</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Makes a shallow copy of an object or an array.</p>
+  <span class="hljs-keyword">return</span> constructor</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Makes a copy of an object or an array.</p>
 <p>Parameters:</p>
 <ul>
 <li><strong>original can be an Object or an Array.</strong></li>
 </ul>
-<p><strong>Returns an Object</strong></p></div></div><div class="code"><div class="wrapper">exports.copy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">copy</span><span class="hljs-params">(original)</span> {</span>
-    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(original)) {
-        <span class="hljs-keyword">var</span> arr = [];
+<p><strong>Returns an Object</strong></p></div></div><div class="code"><div class="wrapper"><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">copy</span> = <span class="hljs-params">(original)</span> -&gt;</span>
+  <span class="hljs-keyword">if</span> Array.isArray original
+    arr = []
 
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">arguments</span>.length; i++) {
-            original = <span class="hljs-built_in">arguments</span>[i] || [];
-            original.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(val)</span> {</span>
-                arr.push(val);
-            });
-        }
+    <span class="hljs-keyword">for</span> original <span class="hljs-keyword">in</span> arguments
+      original ||= []
+      original.forEach <span class="hljs-function"><span class="hljs-params">(val)</span> -&gt;</span> arr.push val
 
-        <span class="hljs-keyword">return</span> arr;
-    }
-    <span class="hljs-keyword">else</span> {
-        <span class="hljs-keyword">var</span> obj = {};
+    <span class="hljs-keyword">return</span> arr
+  <span class="hljs-keyword">else</span>
+    obj = Object.create <span class="hljs-literal">null</span>
 
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">arguments</span>.length; i++) {
-            original = <span class="hljs-built_in">arguments</span>[i] || {};
-            <span class="hljs-built_in">Object</span>.keys(original).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span> {</span>
-                obj[key] = original[key];
-            });
-        }
+    <span class="hljs-keyword">for</span> original <span class="hljs-keyword">in</span> arguments
+      original ||= {}
+      Object.keys<span class="hljs-function"><span class="hljs-params">(original)</span>.<span class="hljs-title">forEach</span> <span class="hljs-params">(key)</span> -&gt;</span> obj[key] = original[key]
 
-        <span class="hljs-keyword">return</span> obj;
-    }
-};</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Tests if a string ends with another string (suffix).</p>
+    <span class="hljs-keyword">return</span> obj</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Tests if a string ends with another string (suffix).</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>str must be a String.</strong><br/>(The string to check in.)</p>
@@ -88,9 +72,8 @@
 <li><p><strong>suffix must be a String.</strong><br/>(The string to check for.)</p>
 </li>
 </ul>
-<p><strong>Returns a Boolean</strong></p></div></div><div class="code"><div class="wrapper">exports.endsWith = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">endsWith</span><span class="hljs-params">(str, suffix)</span> {</span>
-    <span class="hljs-keyword">return</span> str.indexOf(suffix, str.length - suffix.length) !== -<span class="hljs-number">1</span>;
-};</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Tests if a string starts with another string (prefix).</p>
+<p><strong>Returns a Boolean</strong></p></div></div><div class="code"><div class="wrapper"><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">endsWith</span> = <span class="hljs-params">(str, suffix)</span> -&gt;</span>
+  str.indexOf(suffix, str.length - suffix.length) <span class="hljs-keyword">isnt</span> <span class="hljs-number">1</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Tests if a string starts with another string (prefix).</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>str must be a String.</strong><br/>(The string to check in.)</p>
@@ -98,25 +81,22 @@
 <li><p><strong>prefix must be a String.</strong><br/>(The string to check for.)</p>
 </li>
 </ul>
-<p><strong>Returns a Boolean</strong></p></div></div><div class="code"><div class="wrapper">exports.startsWith = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(str, prefix)</span> {</span>
-    <span class="hljs-keyword">return</span> str.indexOf(prefix) === <span class="hljs-number">0</span>;
-};</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Adds a constant to an object.</p>
+<p><strong>Returns a Boolean</strong></p></div></div><div class="code"><div class="wrapper"><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">startsWith</span> = <span class="hljs-params">(str, prefix)</span> -&gt;</span>
+  str.indexOf(prefix) <span class="hljs-keyword">is</span> <span class="hljs-number">0</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Adds a constant to an object.</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>obj must be an Object.</strong><br/>(The object to which to add the constant.)</p>
 </li>
 <li><p><strong>name must be a String.</strong><br/>(The name of the constant.)</p>
 </li>
-<li><p><strong>value must be an Object.</strong><br/>(The value that&#39;s to be assigned.)</p>
+<li><p><strong>value must be an Object.</strong><br/>(The value to be assigned.)</p>
 </li>
-</ul></div></div><div class="code"><div class="wrapper">exports.addConst = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addConst</span><span class="hljs-params">(obj, name, value)</span> {</span>
-    <span class="hljs-built_in">Object</span>.defineProperty(obj, name, {
-        <span class="hljs-string">'value'</span>: value,
-        <span class="hljs-string">'writable'</span>: <span class="hljs-literal">false</span>
-    });
-};</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> function html</span></p>
-<p>Generates HTML.</p>
-<p>Properties:</p>
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">addConst</span> = <span class="hljs-params">(obj, name, value)</span> -&gt;</span>
+  Object.defineProperty obj, name,
+    <span class="hljs-attribute">value</span>: value
+    <span class="hljs-attribute">writable</span>: <span class="hljs-literal">false</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> function html</span></p>
+<p>Generates HTML.
+Properties:</p>
 <ul>
 <li>CLOSE     Indicates that a close tag should be generated (i.e. &lt;/TAG&gt;).</li>
 <li>OPENCLOSE Indicates that both the open and close tag should be generated (i.e. &lt;TAG&gt;&lt;/TAG&gt;).</li>
@@ -130,57 +110,38 @@
 </li>
 <li><p><strong>opts must be a Number.</strong></p>
 </li>
-</ul></div></div><div class="code"><div class="wrapper">exports.html = (<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-    <span class="hljs-keyword">var</span> CLOSE     = <span class="hljs-number">1</span>, <span class="hljs-comment">//0b1</span>
-        OPENCLOSE = <span class="hljs-number">2</span>, <span class="hljs-comment">//0b10</span>
-        AUTOCLOSE = <span class="hljs-number">4</span>; <span class="hljs-comment">//0b100</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>TODO: </p></div></div><div class="code"><div class="wrapper">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">escape</span><span class="hljs-params">(str)</span> {</span>
-        <span class="hljs-keyword">return</span> str;
-    }
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-built_in">exports</span>.html = (<span class="hljs-function"> -&gt;</span>
+  CLOSE     = <span class="hljs-number">1</span> <span class="hljs-comment">#0b1</span>
+  OPENCLOSE = <span class="hljs-number">2</span> <span class="hljs-comment">#0b10</span>
+  AUTOCLOSE = <span class="hljs-number">4</span> <span class="hljs-comment">#0b100</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> todod</span></p></div></div><div class="code"><div class="wrapper">  <span class="hljs-function"><span class="hljs-title">escape</span> = <span class="hljs-params">(str)</span> -&gt;</span> str
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">html</span><span class="hljs-params">(tag, attributes, opts)</span> {</span>
-        <span class="hljs-keyword">var</span> out = [<span class="hljs-string">'&lt;'</span>];
-        <span class="hljs-keyword">if</span> (opts &amp; CLOSE) {
-            out.push(<span class="hljs-string">'/'</span>);
-        }
-        out.push(tag);
+  <span class="hljs-function"><span class="hljs-title">html</span> = <span class="hljs-params">(tag, attributes, opts)</span> -&gt;</span>
+    out = [<span class="hljs-string">'&lt;'</span>]
+    out.push <span class="hljs-string">'/'</span> <span class="hljs-keyword">if</span> opts &amp; CLOSE
+    out.push tag
 
-        <span class="hljs-built_in">Object</span>.keys(attributes).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span> {</span>
-            <span class="hljs-keyword">var</span> value = attributes[key];
+    Object.keys<span class="hljs-function"><span class="hljs-params">(attributes)</span>.<span class="hljs-title">forEach</span> <span class="hljs-params">(key)</span> -&gt;</span>
+      value = attributes[key]
 
-            <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'data'</span>) {
-                <span class="hljs-built_in">Object</span>.keys(value).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(dataKey)</span> {</span>
-                    <span class="hljs-keyword">var</span> dataValue = value[dataKey];
+      <span class="hljs-keyword">if</span> key <span class="hljs-keyword">is</span> <span class="hljs-string">'data'</span>
+        Object.keys<span class="hljs-function"><span class="hljs-params">(value)</span>.<span class="hljs-title">forEach</span> <span class="hljs-params">(dataKey)</span> -&gt;</span>
+          dataValue = value[dataKey]
+          dataValue = dataKey <span class="hljs-keyword">if</span> dataValue <span class="hljs-keyword">is</span> <span class="hljs-literal">true</span>
+          out.push <span class="hljs-string">" data-<span class="hljs-subst">#{dataKey}</span>=\"<span class="hljs-subst">#{escape dataValue}</span>\""</span>
+      <span class="hljs-keyword">else</span>
+        value = key <span class="hljs-keyword">if</span> value <span class="hljs-keyword">is</span> <span class="hljs-literal">true</span>
+        out.push <span class="hljs-string">" <span class="hljs-subst">#{key}</span>=\"<span class="hljs-subst">#{escape value}</span>\""</span>
 
-                    <span class="hljs-keyword">if</span> (dataValue === <span class="hljs-literal">true</span>) {
-                        dataValue = dataKey;
-                    }
+    out.push <span class="hljs-string">' /'</span> <span class="hljs-keyword">if</span> opts &amp; AUTOCLOSE
+    out.push <span class="hljs-string">'&gt;'</span>
 
-                    out.push(<span class="hljs-string">' data-'</span> + dataKey + <span class="hljs-string">'="'</span> + <span class="hljs-built_in">escape</span>(dataValue) + <span class="hljs-string">'"'</span>);
-                });
-            }
-            <span class="hljs-keyword">else</span> {
-                <span class="hljs-keyword">if</span> (value === <span class="hljs-literal">true</span>) {
-                    value = key;
-                }
+    <span class="hljs-keyword">if</span> opts &amp; OPENCLOSE
+      out.push <span class="hljs-string">"&lt;/<span class="hljs-subst">#{tag}</span>&gt;"</span>
 
-                out.push(<span class="hljs-string">' '</span> + key + <span class="hljs-string">'="'</span> + <span class="hljs-built_in">escape</span>(value) + <span class="hljs-string">'"'</span>);
-            }
-        });
+    <span class="hljs-keyword">return</span> out.join <span class="hljs-string">''</span></div></div></div><div class="segment"><div class="comments doc-section doc-section-static"><div class="wrapper"><p><span class='doc-section-header'>Static const CLOSE</span></p></div></div><div class="code"><div class="wrapper">  <span class="hljs-built_in">exports</span>.addConst html, <span class="hljs-string">'CLOSE'</span>, CLOSE</div></div></div><div class="segment"><div class="comments doc-section doc-section-static"><div class="wrapper"><p><span class='doc-section-header'>Static const OPENCLOSE</span></p></div></div><div class="code"><div class="wrapper">  <span class="hljs-built_in">exports</span>.addConst html, <span class="hljs-string">'OPENCLOSE'</span>, OPENCLOSE</div></div></div><div class="segment"><div class="comments doc-section doc-section-static"><div class="wrapper"><p><span class='doc-section-header'>Static const AUTOCLOSE</span></p></div></div><div class="code"><div class="wrapper">  <span class="hljs-built_in">exports</span>.addConst html, <span class="hljs-string">'AUTOCLOSE'</span>, AUTOCLOSE
 
-        <span class="hljs-keyword">if</span> (opts &amp; AUTOCLOSE) {
-            out.push(<span class="hljs-string">' /'</span>);
-        }
-        out.push(<span class="hljs-string">'&gt;'</span>);
-
-        <span class="hljs-keyword">if</span> (opts &amp; OPENCLOSE) {
-            out.push(<span class="hljs-string">'&lt;/'</span> + tag + <span class="hljs-string">'&gt;'</span>);
-        }
-
-        <span class="hljs-keyword">return</span> out.join(<span class="hljs-string">''</span>);
-    }</div></div></div><div class="segment"><div class="comments doc-section doc-section-static"><div class="wrapper"><p><span class='doc-section-header'>Static const CLOSE</span></p></div></div><div class="code"><div class="wrapper">    exports.addConst(html, <span class="hljs-string">'CLOSE'</span>, CLOSE);</div></div></div><div class="segment"><div class="comments doc-section doc-section-static"><div class="wrapper"><p><span class='doc-section-header'>Static const OPENCLOSE</span></p></div></div><div class="code"><div class="wrapper">    exports.addConst(html, <span class="hljs-string">'OPENCLOSE'</span>, OPENCLOSE);</div></div></div><div class="segment"><div class="comments doc-section doc-section-static"><div class="wrapper"><p><span class='doc-section-header'>Static const AUTOCLOSE</span></p></div></div><div class="code"><div class="wrapper">    exports.addConst(html, <span class="hljs-string">'AUTOCLOSE'</span>, AUTOCLOSE);
-
-    <span class="hljs-keyword">return</span> html;
-}());</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>An asynchronous version of Array.prototype.map.</p>
+  <span class="hljs-keyword">return</span> html
+)()</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>An asynchronous version of Array.prototype.map.</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>arr must be an Array.</strong><br/>(The array on which we are mapping.)</p>
@@ -191,15 +152,9 @@
 </li>
 <li><p><strong>index is optional, must be a Number, and has a default value of 0.</strong><br/>(The current position in arr.)</p>
 </li>
-</ul></div></div><div class="code"><div class="wrapper">exports.asyncMap = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">asyncMap</span><span class="hljs-params">(arr, method, callback, index)</span> {</span>
-    index = index || <span class="hljs-number">0</span>;
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">asyncMap</span> = <span class="hljs-params">(arr, method, callback, index = <span class="hljs-number">0</span>)</span> -&gt;</span>
+  <span class="hljs-keyword">return</span> callback(arr) <span class="hljs-keyword">if</span> index &gt;= arr.length
 
-    <span class="hljs-keyword">if</span> (index &gt;= arr.length) {
-        <span class="hljs-keyword">return</span> callback(arr);
-    }
-
-    method(arr[index], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> {</span>
-        arr[index] = value;
-        asyncMap(arr, method, callback, index + <span class="hljs-number">1</span>);
-    });
-};</div></div></div></div></body></html>
+  method arr[index], <span class="hljs-function"><span class="hljs-params">(value)</span> -&gt;</span>
+    arr[index] = value
+    asyncMap arr, method, callback, index + <span class="hljs-number">1</span></div></div></div></div></body></html>

@@ -1,14 +1,14 @@
-<!DOCTYPE html><html lang="en"><head><title>lib/assets/task</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib/assets/task"><meta name="groc-project-path" content="lib/assets/task.js"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/assets/task.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">"use strict"</span>;</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Dependencies.</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">var</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
-<span class="hljs-keyword">var</span> pathM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
-<span class="hljs-keyword">var</span> EventEmitter = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>).EventEmitter;
-<span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
-<span class="hljs-keyword">var</span> coffee = <span class="hljs-built_in">require</span>(<span class="hljs-string">'coffee-script'</span>);
-<span class="hljs-keyword">var</span> coffeeReact = <span class="hljs-built_in">require</span>(<span class="hljs-string">'coffee-react'</span>);
-<span class="hljs-keyword">var</span> less = <span class="hljs-built_in">require</span>(<span class="hljs-string">'less'</span>);
-<span class="hljs-keyword">var</span> reactTools = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-tools'</span>);
-<span class="hljs-keyword">var</span> uglifyjs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'uglify-js'</span>);
-<span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./helpers'</span>);
-<span class="hljs-keyword">var</span> utils = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../utilities'</span>);</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Registers a task that compiles assets.</p>
+<!DOCTYPE html><html lang="en"><head><title>lib/assets/task</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib/assets/task"><meta name="groc-project-path" content="lib/assets/task.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/assets/task.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-string">"use strict"</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Dependencies.</p></div></div><div class="code"><div class="wrapper">crypto          = <span class="hljs-built_in">require</span> <span class="hljs-string">'crypto'</span>
+pathM           = <span class="hljs-built_in">require</span> <span class="hljs-string">'path'</span>
+{EventEmitter}  = <span class="hljs-built_in">require</span> <span class="hljs-string">'events'</span>
+fs              = <span class="hljs-built_in">require</span> <span class="hljs-string">'fs'</span>
+coffee          = <span class="hljs-built_in">require</span> <span class="hljs-string">'coffee-script'</span>
+coffeeReact     = <span class="hljs-built_in">require</span> <span class="hljs-string">'coffee-react'</span>
+less            = <span class="hljs-built_in">require</span> <span class="hljs-string">'less'</span>
+reactTools      = <span class="hljs-built_in">require</span> <span class="hljs-string">'react-tools'</span>
+uglifyjs        = <span class="hljs-built_in">require</span> <span class="hljs-string">'uglify-js'</span>
+helpers         = <span class="hljs-built_in">require</span> <span class="hljs-string">'./helpers'</span>
+utils           = <span class="hljs-built_in">require</span> <span class="hljs-string">'../utilities'</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Registers a task that compiles assets.</p>
 <p>TODO: Use <code>Q.all</code>.</p>
 <p>Parameters:</p>
 <ul>
@@ -24,63 +24,48 @@
 </li>
 </ul>
 </li>
-</ul></div></div><div class="code"><div class="wrapper">module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt, options)</span> {</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> task uglify</span></p></div></div><div class="code"><div class="wrapper">    grunt.task.registerTask(<span class="hljs-string">'assets'</span>, <span class="hljs-string">'Compiles assets.'</span>,
-        <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-            <span class="hljs-keyword">var</span> javascriptFiles = helpers.resolveGlobs(
-                options.root,
-                options.manifest.options.paths,
-                <span class="hljs-string">'javascripts'</span>,
-                options.manifest.javascripts
-            );
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-built_in">exports</span> = <span class="hljs-built_in">module</span>.<span class="hljs-function"><span class="hljs-title">exports</span> = <span class="hljs-params">(grunt, options)</span> -&gt;</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'> task uglify</span></p></div></div><div class="code"><div class="wrapper">  grunt.task.registerTask <span class="hljs-string">'assets'</span>, <span class="hljs-string">'Compiles assets.'</span>,<span class="hljs-function"> -&gt;</span>
+    javascriptFiles = helpers.resolveGlobs(
+      options.root,
+      options.manifest.options.paths,
+      <span class="hljs-string">'javascripts'</span>,
+      options.manifest.javascripts
+    )
 
-            <span class="hljs-keyword">var</span> stylesheetFiles = helpers.resolveGlobs(
-                options.root,
-                options.manifest.options.paths,
-                <span class="hljs-string">'stylesheets'</span>,
-                options.manifest.stylesheets
-            );
+    stylesheetFiles = helpers.resolveGlobs(
+      options.root,
+      options.manifest.options.paths,
+      <span class="hljs-string">'stylesheets'</span>,
+      options.manifest.stylesheets
+    )
 
-            <span class="hljs-keyword">var</span> done = <span class="hljs-keyword">this</span>.async();
+    done = <span class="hljs-keyword">this</span>.async()
 
-            <span class="hljs-keyword">var</span> emitter = <span class="hljs-keyword">new</span> EventEmitter();
-            <span class="hljs-keyword">var</span> components = {};
+    emitter = <span class="hljs-keyword">new</span> EventEmitter()
+    components = {}
 
-            <span class="hljs-built_in">Object</span>.keys(javascriptFiles).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
-                components[name] = <span class="hljs-literal">null</span>;
-            });
-            <span class="hljs-built_in">Object</span>.keys(stylesheetFiles).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
-                components[name] = <span class="hljs-literal">null</span>;
-            });
+    Object.keys<span class="hljs-function"><span class="hljs-params">(javascriptFiles)</span>.<span class="hljs-title">forEach</span> <span class="hljs-params">(name)</span> -&gt;</span> components[name] = <span class="hljs-literal">null</span>
+    Object.keys<span class="hljs-function"><span class="hljs-params">(stylesheetFiles)</span>.<span class="hljs-title">forEach</span> <span class="hljs-params">(name)</span> -&gt;</span> components[name] = <span class="hljs-literal">null</span>
 
-            emitter.on(<span class="hljs-string">'component:updated'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> {</span>
-                componentUpdated(event, done, components, options);
-            });
+    emitter.<span class="hljs-literal">on</span> <span class="hljs-string">'component:updated'</span>, <span class="hljs-function"><span class="hljs-params">(event)</span> -&gt;</span>
+      componentUpdated event, done, components, options
 
-            <span class="hljs-keyword">if</span> (!fs.existsSync(options.assetsDir)) {
-                fs.mkdirSync(options.assetsDir);
-            }
+    <span class="hljs-keyword">unless</span> fs.existsSync options.assetsDir
+      fs.mkdirSync options.assetsDir
 
-            <span class="hljs-built_in">Object</span>.keys(javascriptFiles).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
-                <span class="hljs-keyword">var</span> files = utils.copy(javascriptFiles[name]);
-                <span class="hljs-keyword">if</span> (files.length) {
-                    processJavascript(name, files, emitter, options);
-                }
-                <span class="hljs-keyword">else</span> {
-                    writeAsset(<span class="hljs-string">''</span>, name, emitter, options);
-                }
-            });
+    Object.keys<span class="hljs-function"><span class="hljs-params">(javascriptFiles)</span>.<span class="hljs-title">forEach</span> <span class="hljs-params">(name)</span> -&gt;</span>
+      files = utils.copy javascriptFiles[name]
+      <span class="hljs-keyword">if</span> files.length
+        processJavascript name, files, emitter, options
+      <span class="hljs-keyword">else</span>
+        writeAsset <span class="hljs-string">''</span>, name, emitter, options
 
-            <span class="hljs-built_in">Object</span>.keys(stylesheetFiles).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
-                <span class="hljs-keyword">var</span> files = utils.copy(stylesheetFiles[name]);
-                <span class="hljs-keyword">if</span> (files.length) {
-                    processStylesheet(name, files, emitter, options);
-                }
-                <span class="hljs-keyword">else</span> {
-                    writeAsset(<span class="hljs-string">''</span>, name, emitter, options);
-                }
-            });
-        });
-};</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Processes the component:updated event.</p>
+    Object.keys<span class="hljs-function"><span class="hljs-params">(stylesheetFiles)</span>.<span class="hljs-title">forEach</span> <span class="hljs-params">(name)</span> -&gt;</span>
+      files = utils.copy stylesheetFiles[name]
+      <span class="hljs-keyword">if</span> files.length
+        processStylesheet name, files, emitter, options
+      <span class="hljs-keyword">else</span>
+        writeAsset <span class="hljs-string">''</span>, name, emitter, options</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Processes the component:updated event.</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>event must be an Event.</strong><br/>(The event that was received.)</p>
@@ -91,92 +76,63 @@
 </li>
 <li><p><strong>options must be an Object.</strong><br/>(The options object.)</p>
 </li>
-</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">componentUpdated</span><span class="hljs-params">(event, done, components, options)</span> {</span>
-    <span class="hljs-keyword">if</span> (!event.success) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Die on the first error.</p></div></div><div class="code"><div class="wrapper">        
-        <span class="hljs-keyword">if</span> (utils.defined(event.message)) {
-            <span class="hljs-keyword">if</span> (event.message <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Error</span>) {
-                done(event.message);
-            }
-            <span class="hljs-keyword">else</span> {
-                done(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(event.message));
-            }
-        }
-        <span class="hljs-keyword">else</span> {
-            done(<span class="hljs-literal">false</span>);
-        }
-    }
-    <span class="hljs-keyword">else</span> {
-        console.log(<span class="hljs-string">'Written file %s.'</span>, event.success);
-    }
-    
-    components[event.name] = event.success;
-    
-    <span class="hljs-keyword">var</span> $<span class="hljs-keyword">break</span> = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'break'</span>);
-    <span class="hljs-keyword">var</span> status;
-    
-    <span class="hljs-keyword">try</span> {
-        status = <span class="hljs-built_in">Object</span>.keys(components).map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(val)</span> {</span>
-            <span class="hljs-keyword">return</span> components[val];
-        }).reduce(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(prev, cur)</span> {</span>
-            <span class="hljs-keyword">if</span> (!cur) {
-                <span class="hljs-keyword">throw</span> $<span class="hljs-keyword">break</span>;
-            }
-            <span class="hljs-keyword">return</span> prev &amp;&amp; cur;
-        });
-    }
-    <span class="hljs-keyword">catch</span>(err) {
-        <span class="hljs-keyword">if</span> (err !== $<span class="hljs-keyword">break</span>) <span class="hljs-keyword">throw</span> err;
-    }
-    
-    <span class="hljs-keyword">if</span> (status) {
-        <span class="hljs-keyword">var</span> staticManifest = <span class="hljs-built_in">JSON</span>.stringify(components);
-        <span class="hljs-keyword">var</span> appcacheData;
-        <span class="hljs-keyword">var</span> fileName = pathM.join(options.assetsDir, <span class="hljs-string">'manifest.json'</span>);
-        <span class="hljs-keyword">var</span> appcache = pathM.join(options.assetsDir, <span class="hljs-string">'manifest.appcache'</span>);
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-title">componentUpdated</span> = <span class="hljs-params">(event, done, components, options)</span> -&gt;</span>
+  <span class="hljs-keyword">if</span> event.success
+    <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Written file %s.'</span>, event.success
+  <span class="hljs-keyword">else</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Die on the first error.</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">if</span> utils.defined event.message
+      <span class="hljs-keyword">if</span> event.message instanceOf Error
+        <span class="hljs-keyword">return</span> done event.message
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">return</span> done <span class="hljs-keyword">new</span> Error(event.message)
+    <span class="hljs-keyword">else</span>
+      <span class="hljs-keyword">return</span> done <span class="hljs-literal">false</span>
 
-        <span class="hljs-keyword">if</span> (options.staticBase) {
-            appcacheData = <span class="hljs-string">'CACHE MANIFEST\n'</span>;
+  components[event.name] = event.success
+  $<span class="hljs-keyword">break</span> = <span class="hljs-keyword">new</span> Error(<span class="hljs-string">'break'</span>)
 
-            <span class="hljs-built_in">Object</span>.keys(components).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span> {</span>
-                <span class="hljs-keyword">var</span> file = components[key];
-                appcacheData += options.staticBase + <span class="hljs-string">'/'</span> + file + <span class="hljs-string">'\n'</span>;
-            });
+  <span class="hljs-keyword">try</span>
+    status = Object.keys<span class="hljs-function"><span class="hljs-params">(components)</span>.<span class="hljs-title">map</span><span class="hljs-params">((val) -&gt;
+      components[val]
+    )</span>.<span class="hljs-title">reduce</span><span class="hljs-params">((prev, cur) -&gt;
+      <span class="hljs-keyword">throw</span> $<span class="hljs-keyword">break</span> <span class="hljs-keyword">unless</span> cur
+      <span class="hljs-keyword">return</span> prev &amp;&amp; cur
+    )</span>
+  <span class="hljs-title">catch</span> <span class="hljs-title">err</span>
+    <span class="hljs-title">throw</span> <span class="hljs-title">err</span> <span class="hljs-title">if</span> <span class="hljs-title">err</span> <span class="hljs-title">isnt</span> <span class="hljs-title">$break</span>
 
-            <span class="hljs-keyword">if</span> (fs.existsSync(appcache)) {
-                fs.truncateSync(appcache);
-            }
-        }
-    
-        <span class="hljs-keyword">if</span> (fs.existsSync(fileName)) {
-            fs.truncateSync(fileName);
-        }
-    
-        fs.appendFile(fileName, staticManifest, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> {</span>
-            <span class="hljs-keyword">if</span> (err) {
-                console.error(err);
-                done(err);
-            }
-            <span class="hljs-keyword">else</span> {
-                console.log(<span class="hljs-string">'Written file manifest.json.'</span>);
-                <span class="hljs-keyword">if</span> (appcacheData) {
-                    fs.appendFile(appcache, appcacheData, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> {</span>
-                        <span class="hljs-keyword">if</span> (err) {
-                            console.error(err);
-                            done(err);
-                        }
-                        <span class="hljs-keyword">else</span> {
-                            console.log(<span class="hljs-string">'Written file manifest.appcache.'</span>);
-                            done();
-                        }
-                    });
-                }
-                <span class="hljs-keyword">else</span> {
-                    done();
-                }
-            }
-        });
-    }
-}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Processes a javascript.</p>
+  <span class="hljs-title">if</span> <span class="hljs-title">status</span>
+    <span class="hljs-title">staticManifest</span> = <span class="hljs-title">JSON</span>.<span class="hljs-title">stringify</span> <span class="hljs-title">components</span>
+    <span class="hljs-title">fileName</span> = <span class="hljs-title">pathM</span>.<span class="hljs-title">join</span> <span class="hljs-title">options</span>.<span class="hljs-title">assetsDir</span>, '<span class="hljs-title">manifest</span>.<span class="hljs-title">json</span>'
+    <span class="hljs-title">appcache</span> = <span class="hljs-title">pathM</span>.<span class="hljs-title">join</span> <span class="hljs-title">options</span>.<span class="hljs-title">assetsDir</span>, '<span class="hljs-title">manifest</span>.<span class="hljs-title">appcache</span>'
+
+    <span class="hljs-title">if</span> <span class="hljs-title">options</span>.<span class="hljs-title">staticBase</span>
+      <span class="hljs-title">appcacheData</span> = '<span class="hljs-title">CACHE</span> <span class="hljs-title">MANIFEST</span>\<span class="hljs-title">n</span>'
+
+      <span class="hljs-title">Object</span>.<span class="hljs-title">keys</span><span class="hljs-params">(components)</span>.<span class="hljs-title">forEach</span> <span class="hljs-params">(key)</span> -&gt;</span>
+        file = components[key]
+        appcacheData += <span class="hljs-string">"<span class="hljs-subst">#{options.staticBase}</span>/<span class="hljs-subst">#{file}</span>\n"</span>
+
+      fs.truncateSync appcache <span class="hljs-keyword">if</span> fs.existsSync appcache
+
+    fs.truncateSync fileName <span class="hljs-keyword">if</span> fs.existsSync appcache
+
+    fs.appendFile fileName, staticManifest, <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> err
+        <span class="hljs-built_in">console</span>.error err
+        <span class="hljs-keyword">return</span> done err
+
+      <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Written file manifest.json.'</span>
+
+      <span class="hljs-keyword">if</span> appcacheData
+        fs.appendFile appcache, appcacheData, <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span>
+          <span class="hljs-keyword">if</span> err
+            <span class="hljs-built_in">console</span>.error err
+            <span class="hljs-keyword">return</span> done err
+
+          <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Written file manifest.appcache.'</span>
+          <span class="hljs-keyword">return</span> done()
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">return</span> done()</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Processes a javascript.</p>
 <p>TODO: What to do with vendor scripts that already have a minified version?</p>
 <p>TODO: Is it safe to minify JSX files?</p>
 <p>Parameters:</p>
@@ -189,39 +145,31 @@
 </li>
 <li><p><strong>options must be an Object.</strong><br/>(The options object.)</p>
 </li>
-</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">processJavascript</span><span class="hljs-params">(name, files, emitter, options)</span> {</span>
-    utils.asyncMap(files, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapMethod</span><span class="hljs-params">(file, next)</span> {</span>
-        fs.readFile(file, <span class="hljs-string">'utf-8'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, data)</span> {</span>
-            <span class="hljs-keyword">if</span> (err) {
-                console.error(err);
-                emitter.emit(<span class="hljs-string">'component:updated'</span>, {
-                    <span class="hljs-string">'name'</span>: name,
-                    <span class="hljs-string">'success'</span>: <span class="hljs-literal">false</span>,
-                    <span class="hljs-string">'message'</span>: err
-                });
-            }
-            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (file.match(<span class="hljs-regexp">/\.jsx$/</span>)) {
-                next(reactTools.transform(data));
-            }
-            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (file.match(<span class="hljs-regexp">/\.cjsx$/</span>)) {
-                next(coffee.compile(coffeeReact.transform(data)));
-            }
-            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (file.match(<span class="hljs-regexp">/\.coffee$/</span>)) {
-                next(coffee.compile(data));
-            }
-            <span class="hljs-keyword">else</span> {
-                next(data);
-            }
-        });
-    }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapCallback</span><span class="hljs-params">(files)</span> {</span>
-        <span class="hljs-keyword">var</span> result = uglifyjs.minify(files, {
-            <span class="hljs-comment">//'warnings': true,</span>
-            <span class="hljs-string">'fromString'</span>: <span class="hljs-literal">true</span>,
-        }).code;
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-title">processJavascript</span> = <span class="hljs-params">(name, files, emitter, options)</span> -&gt;</span>
+  utils.asyncMap files, <span class="hljs-function"><span class="hljs-params">(file, next)</span> -&gt;</span>
+    fs.readFile file, <span class="hljs-string">'utf-8'</span>, <span class="hljs-function"><span class="hljs-params">(err, data)</span> -&gt;</span>
+      <span class="hljs-keyword">switch</span>
+        <span class="hljs-keyword">when</span> err
+          <span class="hljs-built_in">console</span>.error err
+          emitter.emit <span class="hljs-string">'component:updated'</span>,
+            <span class="hljs-attribute">name</span>: name
+            <span class="hljs-attribute">success</span>: <span class="hljs-literal">false</span>
+            <span class="hljs-attribute">message</span>: err
+        <span class="hljs-keyword">when</span> file.match <span class="hljs-regexp">/\.jsx$/</span>
+          next reactTools.transform(data)
+        <span class="hljs-keyword">when</span> file.match <span class="hljs-regexp">/\.cjsx$/</span>
+          next coffee.compile(coffeeReact.transform(data))
+        <span class="hljs-keyword">when</span> file.match <span class="hljs-regexp">/\.coffee$/</span>
+          next coffee.compile(data)
+        <span class="hljs-keyword">else</span>
+          next data
+  , <span class="hljs-function"><span class="hljs-params">(files)</span> -&gt;</span>
+    result = uglifyjs.minify(files,
+      <span class="hljs-comment">#warnings: true</span>
+      <span class="hljs-attribute">fromString</span>: <span class="hljs-literal">true</span>
+    ).code
 
-        writeAsset(result, name, emitter, options);
-    });
-}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Processes a stylesheet.</p>
+    writeAsset result, name, emitter, options</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Processes a stylesheet.</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>name must be a String.</strong><br/>(The name of the stylesheet to process.)</p>
@@ -232,54 +180,38 @@
 </li>
 <li><p><strong>options must be an Object.</strong><br/>(The options object.)</p>
 </li>
-</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">processStylesheet</span><span class="hljs-params">(name, files, emitter, options)</span> {</span>
-    <span class="hljs-keyword">var</span> parser = <span class="hljs-keyword">new</span> less.Parser({
-        <span class="hljs-string">'paths'</span>: options.manifest.options.paths.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(path)</span> {</span>
-            <span class="hljs-keyword">return</span> pathM.join(options.root, path, <span class="hljs-string">'stylesheets'</span>);
-        }),
-        <span class="hljs-string">'filename'</span>: name,
-    });
-    
-    utils.asyncMap(files, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapMethod</span><span class="hljs-params">(file, next)</span> {</span>
-        fs.readFile(file, <span class="hljs-string">'utf-8'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, data)</span> {</span>
-            <span class="hljs-keyword">if</span> (err) {
-                console.error(err);
-                emitter.emit(<span class="hljs-string">'component:updated'</span>, {
-                    <span class="hljs-string">'name'</span>: name,
-                    <span class="hljs-string">'success'</span>: <span class="hljs-literal">false</span>,
-                    <span class="hljs-string">'message'</span>: err
-                });
-            }
-            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (file.match(<span class="hljs-regexp">/\.less$/</span>)) {
-                parser.parse(data, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, tree)</span> {</span>
-                    <span class="hljs-keyword">if</span> (err) {
-                        console.error(err);
-                        emitter.emit(<span class="hljs-string">'component:updated'</span>, {
-                            <span class="hljs-string">'name'</span>: name,
-                            <span class="hljs-string">'success'</span>: <span class="hljs-literal">false</span>,
-                            <span class="hljs-string">'message'</span>: err
-                        });
-                    }
-                    <span class="hljs-keyword">else</span> {
-                        <span class="hljs-keyword">var</span> val = tree.toCSS({
-                            <span class="hljs-string">'compress'</span>: <span class="hljs-literal">true</span>
-                        });
-                        next(val);
-                    }
-                });
-            }
-            <span class="hljs-keyword">else</span> {
-                next(data);
-            }
-        });
-    }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapCallback</span><span class="hljs-params">(files)</span> {</span>
-        <span class="hljs-keyword">var</span> result = files.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(prev, cur)</span> {</span>
-            <span class="hljs-keyword">return</span> prev + <span class="hljs-string">'\n'</span> + cur;
-        });
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-title">processStylesheet</span> = <span class="hljs-params">(name, files, emitter, options)</span> -&gt;</span>
+  parser = <span class="hljs-keyword">new</span> less.Parser
+    <span class="hljs-attribute">paths</span>: options.manifest.options.paths.map <span class="hljs-function"><span class="hljs-params">(path)</span> -&gt;</span>
+      pathM.join options.root, path, <span class="hljs-string">'stylesheets'</span>
+    <span class="hljs-attribute">filename</span>: name
 
-        writeAsset(result, name, emitter, options);
-    });
-}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Writes an asset to the filesystem.</p>
+  utils.asyncMap files, <span class="hljs-function"><span class="hljs-params">(file, next)</span> -&gt;</span>
+    fs.readFile file, <span class="hljs-string">'utf-8'</span>, <span class="hljs-function"><span class="hljs-params">(err, data)</span> -&gt;</span>
+      <span class="hljs-keyword">switch</span>
+        <span class="hljs-keyword">when</span> err
+          <span class="hljs-built_in">console</span>.error err
+          emitter.emit <span class="hljs-string">'component:updated'</span>,
+            <span class="hljs-attribute">name</span>: name
+            <span class="hljs-attribute">success</span>: <span class="hljs-literal">false</span>
+            <span class="hljs-attribute">message</span>: err
+        <span class="hljs-keyword">when</span> file.match <span class="hljs-regexp">/\.less$/</span>
+          parser.parse data, <span class="hljs-function"><span class="hljs-params">(err, tree)</span> -&gt;</span>
+            <span class="hljs-keyword">if</span> err
+              <span class="hljs-built_in">console</span>.error err
+              emitter.emit <span class="hljs-string">'component:updated'</span>,
+                <span class="hljs-attribute">name</span>: name
+                <span class="hljs-attribute">success</span>: <span class="hljs-literal">false</span>
+                <span class="hljs-attribute">message</span>: err
+            <span class="hljs-keyword">else</span>
+              val = tree.toCss
+                <span class="hljs-attribute">compress</span>: <span class="hljs-literal">true</span>
+              next val
+        <span class="hljs-keyword">else</span>
+          next data
+  , <span class="hljs-function"><span class="hljs-params">(files)</span> -&gt;</span>
+    result = fiels.reduce <span class="hljs-function"><span class="hljs-params">(prev, cur)</span> -&gt;</span> prev + <span class="hljs-string">'\n'</span> + cur
+    writeAsset result, name, emitter, options</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Writes an asset to the filesystem.</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>content must be a String.</strong><br/>(The contents to be written.)</p>
@@ -290,31 +222,23 @@
 </li>
 <li><p><strong>options must be an Object.</strong><br/>(The options object.)</p>
 </li>
-</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">writeAsset</span><span class="hljs-params">(content, name, emitter, options)</span> {</span>
-    <span class="hljs-keyword">var</span> shasum = crypto.createHash(<span class="hljs-string">'sha1'</span>);
-    shasum.update(content);
-    <span class="hljs-keyword">var</span> digest = shasum.digest(<span class="hljs-string">'hex'</span>);
-    <span class="hljs-keyword">var</span> fileName = digest + <span class="hljs-string">'-'</span> + name;
-    <span class="hljs-keyword">var</span> filePath = pathM.join(options.assetsDir, fileName);
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-title">writeAsset</span> = <span class="hljs-params">(content, name, emitter, options)</span> -&gt;</span>
+  shasum = crypto.createHash(<span class="hljs-string">'sha1'</span>)
+  shasum.update content
+  digest = shasum.digest <span class="hljs-string">'hex'</span>
+  filename = <span class="hljs-string">"<span class="hljs-subst">#{digest}</span>-<span class="hljs-subst">#{name}</span>"</span>
+  filepath = pathM.join options.assetsDir, filename
 
-    <span class="hljs-keyword">if</span> (fs.existsSync(filePath)) {
-        fs.truncateSync(filePath);
-    }
+  fs.truncateSync filepath <span class="hljs-keyword">if</span> fs.existsSync filepath
 
-    fs.appendFile(filePath, content, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> {</span>
-        <span class="hljs-keyword">if</span> (err) {
-            console.error(err);
-            emitter.emit(<span class="hljs-string">'component:updated'</span>, {
-                <span class="hljs-string">'name'</span>: name,
-                <span class="hljs-string">'success'</span>: <span class="hljs-literal">false</span>,
-                <span class="hljs-string">'message'</span>: err
-            });
-        }
-        <span class="hljs-keyword">else</span> {
-            emitter.emit(<span class="hljs-string">'component:updated'</span>, {
-                <span class="hljs-string">'name'</span>: name,
-                <span class="hljs-string">'success'</span>: fileName
-            });
-        }
-    });
-}</div></div></div></div></body></html>
+  fs.appendFile filePath, content, <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span>
+    <span class="hljs-keyword">if</span> err
+      <span class="hljs-built_in">console</span>.error err
+      emitter.emit <span class="hljs-string">'component:updated'</span>,
+        <span class="hljs-attribute">name</span>: name
+        <span class="hljs-attribute">success</span>: <span class="hljs-literal">false</span>
+        <span class="hljs-attribute">message</span>: err
+    <span class="hljs-keyword">else</span>
+      emitter.emit <span class="hljs-string">'component:updated'</span>,
+        <span class="hljs-attribute">name</span>: name
+        <span class="hljs-attribute">success</span>: filename</div></div></div></div></body></html>
