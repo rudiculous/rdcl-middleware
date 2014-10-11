@@ -204,13 +204,13 @@ utils           = <span class="hljs-built_in">require</span> <span class="hljs-s
                 <span class="hljs-attribute">success</span>: <span class="hljs-literal">false</span>
                 <span class="hljs-attribute">message</span>: err
             <span class="hljs-keyword">else</span>
-              val = tree.toCss
+              val = tree.toCSS
                 <span class="hljs-attribute">compress</span>: <span class="hljs-literal">true</span>
               next val
         <span class="hljs-keyword">else</span>
           next data
   , <span class="hljs-function"><span class="hljs-params">(files)</span> -&gt;</span>
-    result = fiels.reduce <span class="hljs-function"><span class="hljs-params">(prev, cur)</span> -&gt;</span> prev + <span class="hljs-string">'\n'</span> + cur
+    result = files.reduce <span class="hljs-function"><span class="hljs-params">(prev, cur)</span> -&gt;</span> prev + <span class="hljs-string">'\n'</span> + cur
     writeAsset result, name, emitter, options</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Writes an asset to the filesystem.</p>
 <p>Parameters:</p>
 <ul>
@@ -231,7 +231,7 @@ utils           = <span class="hljs-built_in">require</span> <span class="hljs-s
 
   fs.truncateSync filepath <span class="hljs-keyword">if</span> fs.existsSync filepath
 
-  fs.appendFile filePath, content, <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span>
+  fs.appendFile filepath, content, <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span>
     <span class="hljs-keyword">if</span> err
       <span class="hljs-built_in">console</span>.error err
       emitter.emit <span class="hljs-string">'component:updated'</span>,

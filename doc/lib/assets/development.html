@@ -33,7 +33,6 @@ utils = <span class="hljs-built_in">require</span> <span class="hljs-string">'..
     <span class="hljs-string">'javascripts'</span>,
     manifest.javascripts
   )
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">':'</span>, javascriptFiles)
 
   stylesheetFiles = helpers.resolveGlobs(
     root,
@@ -194,8 +193,6 @@ utils = <span class="hljs-built_in">require</span> <span class="hljs-string">'..
       <span class="hljs-keyword">else</span>
         [file]
     out = []
-
-    <span class="hljs-built_in">console</span>.log filePaths, files, file
 
     filePaths.forEach <span class="hljs-function"><span class="hljs-params">(file)</span> -&gt;</span>
       attrs = utils.copy options, attributes

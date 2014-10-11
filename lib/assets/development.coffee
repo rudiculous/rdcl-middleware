@@ -30,7 +30,6 @@ exports = module.exports = (options) ->
     'javascripts',
     manifest.javascripts
   )
-  console.log(':', javascriptFiles)
 
   stylesheetFiles = helpers.resolveGlobs(
     root,
@@ -199,8 +198,6 @@ addTagFactory = (files, assetsBaseURI, tag, srcAttr, attributes, opts = 0) ->
       else
         [file]
     out = []
-
-    console.log filePaths, files, file
 
     filePaths.forEach (file) ->
       attrs = utils.copy options, attributes
